@@ -15,14 +15,13 @@ image = moveUp;
 x = 100;
 y = 100;
 
-speed = 5;
-
 def main():
   global image, x, y
 
   prevTick = pygame.time.get_ticks()
 
-
+  moveTimer = 250
+  
   while True:
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
@@ -37,7 +36,6 @@ def main():
       moveTimer = 250
 
     if pygame.time.get_ticks() - prevTick >= moveTimer:
-      
         if keys[pygame.K_UP]:
             y += -64;
             image = moveUp;
