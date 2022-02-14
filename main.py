@@ -10,7 +10,7 @@ def main():
   pygame.display.set_caption('Adv CP Pokemon Clone')
   clock = pygame.time.Clock()
     
-  sprites = YSortCameraGroup()
+  sprites = CameraGroup()
   objectSprites = pygame.sprite.Group()
 
   player = Player(sprites, objectSprites)
@@ -30,7 +30,7 @@ def main():
     pygame.display.update()
     clock.tick(60)
 
-class YSortCameraGroup(pygame.sprite.Group):
+class CameraGroup(pygame.sprite.Group):
     def __init__(self):
         super().__init__()
         self.display_surface = pygame.display.get_surface()
@@ -43,7 +43,7 @@ class YSortCameraGroup(pygame.sprite.Group):
         self.offset.x = player.rect.centerx - self.half_width
         self.offset.y = player.rect.centery - self.half_height
 
-        for sprite in sorted(self.sprites(),key = lambda sprite: sprite.find_placement()):
+        for sprite in self.sprites():
             offset_pos = sprite.rect.topleft - self.offset
             self.display_surface.blit(sprite.image, offset_pos)
 
