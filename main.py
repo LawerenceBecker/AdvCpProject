@@ -19,7 +19,8 @@ def main():
   global image, x, y
 
   prevTick = pygame.time.get_ticks()
-  moveTimer = 300
+
+  moveTimer = 250
   
   while True:
     for event in pygame.event.get():
@@ -28,6 +29,11 @@ def main():
         sys.exit()
 
     keys = pygame.key.get_pressed()
+
+    if keys[pygame.K_LSHIFT]:
+      moveTimer = 100
+    else: 
+      moveTimer = 250
 
     if pygame.time.get_ticks() - prevTick >= moveTimer:
         if keys[pygame.K_UP]:
