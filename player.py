@@ -66,18 +66,19 @@ class Player(pygame.sprite.Sprite):
 
         if pygame.time.get_ticks() - self.prevTick >= self.moveTimer:
             if keys[pygame.K_BACKSPACE]:
-                print('Saving... ...')
+                print('\nSaving... \n...')
                 self.save_char()
                 print('Done Saving')
                 self.prevTick = pygame.time.get_ticks()
 
             elif keys[pygame.K_RETURN]:
+                print('Reset(Debug)')
                 self.rect.topleft = (0,0)
                 self.save_char()
                 self.prevTick = pygame.time.get_ticks()
 
             elif keys[pygame.K_DELETE]:
-                print('Loading... ...')
+                print('\nLoading... \n...')
                 self.load_char()
                 print('Done Loading')
                 self.prevTick = pygame.time.get_ticks()
