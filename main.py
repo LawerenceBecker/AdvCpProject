@@ -1,12 +1,9 @@
 import pygame
-from pygame.locals import *
+import sys
 
+screen = pygame.display.set_mode((1280,720))
+pygame.display.set_caption('Adv CP Pokemon Clone')
 clock = pygame.time.Clock()
-
-pygame.init();
-
-win = pygame.display.set_mode((250,250));
-pygame.display.set_caption("Definitely Not Pokémon");
 
 moveUp = pygame.image.load("Character/BoxUp.png");
 moveDown = pygame.image.load("Character/BoxDown.png");
@@ -18,33 +15,35 @@ image = moveUp;
 x = 100;
 y = 100;
 
-running = True;
-
-while running:
+def main():
+  global image, x, y
   
-  for event in pygame.event.get():
-    if event.type == QUIT:
-      running = False;
-      pygame.quit();
-      quit();
-  
-  keys = pygame.key.get_pressed()
+  while True:
+    for event in pygame.event.get():
+      if event.type == pygame.QUIT:
+        pygame.QUIT
+        sys.exit()
 
-  if keys[pygame.K_UP]:
-    y += -5;
-    image = moveUp;
-  elif keys[pygame.K_DOWN]:
-    y += 5;
-    image = moveDown;
-  elif keys[pygame.K_LEFT]:
-    x += -5;
-    image = moveLeft;
-  elif keys[pygame.K_RIGHT]:
-    x += 5;
-    image = moveRight;
+    keys = pygame.key.get_pressed()
 
-  win.fill('green');
-  win.blit(image, (x, y));
+    if keys[pygame.K_UP]:
+      y += -5;
+      image = moveUp;
+    elif keys[pygame.K_DOWN]:
+      y += 5;
+      image = moveDown;
+    elif keys[pygame.K_LEFT]:
+      x += -5;
+      image = moveLeft;
+    elif keys[pygame.K_RIGHT]:
+      x += 5;
+      image = moveRight;
 
-  pygame.display.update();
-  clock.tick(60);
+    screen.fill('#9edb64')
+    screen.blit(image, (x, y));
+
+    pygame.display.update()
+    clock.tick(60)
+
+if __name__ == '__main__':
+  main()
