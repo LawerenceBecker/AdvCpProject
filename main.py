@@ -14,7 +14,8 @@ def main():
   objectSprites = pygame.sprite.Group()
 
   player = Player(sprites, objectSprites)
-  testTile = Tile([sprites, objectSprites])
+  player.load_char()
+  Tile([sprites, objectSprites])
   
   while True:
     for event in pygame.event.get():
