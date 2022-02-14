@@ -1,26 +1,20 @@
 import pygame
 import sys
 
-screen = pygame.display.set_mode((1280,720))
-pygame.display.set_caption('Adv CP Pokemon Clone')
-clock = pygame.time.Clock()
-
-moveUp = pygame.image.load("Character/BoxUp.png");
-moveDown = pygame.image.load("Character/BoxDown.png");
-moveLeft = pygame.image.load("Character/BoxLeft.png");
-moveRight = pygame.image.load("Character/BoxRight.png");
-
-image = moveUp;
-
-x = 100;
-y = 100;
+from player import Player
+from tile import Tile
 
 def main():
-  global image, x, y
 
-  prevTick = pygame.time.get_ticks()
+  screen = pygame.display.set_mode((1280,720))
+  pygame.display.set_caption('Adv CP Pokemon Clone')
+  clock = pygame.time.Clock()
+    
+  sprites = YSortCameraGroup()
+  objectSprites = pygame.sprite.Group()
 
-  moveTimer = 250
+  player = Player(sprites, objectSprites)
+  testTile = Tile([sprites, objectSprites])
   
   while True:
     for event in pygame.event.get():
@@ -28,36 +22,30 @@ def main():
         pygame.QUIT
         sys.exit()
 
-    keys = pygame.key.get_pressed()
-
-    if keys[pygame.K_LSHIFT]:
-      moveTimer = 100
-    else: 
-      moveTimer = 250
-
-    if pygame.time.get_ticks() - prevTick >= moveTimer:
-        if keys[pygame.K_UP]:
-            y += -64;
-            image = moveUp;
-            prevTick = pygame.time.get_ticks()
-        elif keys[pygame.K_DOWN]:
-            y += 64;
-            image = moveDown;
-            prevTick = pygame.time.get_ticks()
-        elif keys[pygame.K_LEFT]:
-            x += -64;
-            image = moveLeft;
-            prevTick = pygame.time.get_ticks()
-        elif keys[pygame.K_RIGHT]:
-            x += 64;
-            image = moveRight;
-            prevTick = pygame.time.get_ticks()
-
     screen.fill('#9edb64')
-    screen.blit(image, (x, y));
+
+    sprites.custom_draw(player)
+    player.update()
 
     pygame.display.update()
     clock.tick(60)
+
+class YSortCameraGroup(pygame.sprite.Group):
+    def __init__(self):
+        super().__init__()
+        self.display_surface = pygame.display.get_surface()
+        self.half_width = self.display_surface.get_size()[0] // 2
+        self.half_height = self.display_surface.get_size()[1] // 2
+        self.offset = pygame.math.Vector2()
+
+    def custom_draw(self, player):
+
+        self.offset.x = player.rect.centerx - self.half_width
+        self.offset.y = player.rect.centery - self.half_height
+
+        for sprite in sorted(self.sprites(),key = lambda sprite: sprite.find_placement()):
+            offset_pos = sprite.rect.topleft - self.offset
+            self.display_surface.blit(sprite.image, offset_pos)
 
 if __name__ == '__main__':
   main()
