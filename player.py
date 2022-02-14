@@ -72,7 +72,7 @@ class Player(pygame.sprite.Sprite):
                 self.prevTick = pygame.time.get_ticks()
 
             elif keys[pygame.K_RETURN]:
-                print('Reset(Debug)')
+                print('\nReset(Debug)')
                 self.rect.topleft = (0,0)
                 self.save_char()
                 self.prevTick = pygame.time.get_ticks()
