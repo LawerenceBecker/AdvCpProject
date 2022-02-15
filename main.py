@@ -15,6 +15,7 @@ def main():
 
   player = Player(sprites, objectSprites)
   player.load_char()
+  player.add_pokemon('Charmander')
   Tile([sprites, objectSprites])
   
   while True:
