@@ -1,4 +1,5 @@
 import pygame
+import pickle
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, groups, objectSprites):
@@ -64,22 +65,51 @@ class Player(pygame.sprite.Sprite):
         self.direction = pygame.math.Vector2()
 
         if pygame.time.get_ticks() - self.prevTick >= self.moveTimer:
-            if keys[pygame.K_UP]:
+            if keys[pygame.K_BACKSPACE]:
+                print('\nSaving... \n...')
+                self.save_char()
+                print('Done Saving')
+                self.prevTick = pygame.time.get_ticks()
+
+            elif keys[pygame.K_RETURN]:
+                print('Reset(Debug)')
+                self.rect.topleft = (0,0)
+                self.save_char()
+                self.prevTick = pygame.time.get_ticks()
+
+            elif keys[pygame.K_DELETE]:
+                print('\nLoading... \n...')
+                self.load_char()
+                print('Done Loading')
+                self.prevTick = pygame.time.get_ticks()
+
+            if keys[pygame.K_w] or keys[pygame.K_UP]:
                 self.direction.y = -1
                 self.image = self.moveUp
                 self.prevTick = pygame.time.get_ticks()
 
-            elif keys[pygame.K_DOWN]:
+            elif keys[pygame.K_s] or keys[pygame.K_DOWN]:
                 self.direction.y = 1
                 self.image = self.moveDown
                 self.prevTick = pygame.time.get_ticks()
                 
-            elif keys[pygame.K_LEFT]:
+            elif keys[pygame.K_a] or keys[pygame.K_LEFT]:
                 self.direction.x = -1
                 self.image = self.moveLeft
                 self.prevTick = pygame.time.get_ticks()
 
-            elif keys[pygame.K_RIGHT]:
+            elif keys[pygame.K_d] or keys[pygame.K_RIGHT]:
                 self.direction.x = 1
                 self.image = self.moveRight
                 self.prevTick = pygame.time.get_ticks()
+
+    def get_data(self):
+        return self.rect.x, self.rect.y
+
+    def save_char(self):
+        with open("Data/CharData.plk", "wb") as charData:
+            pickle.dump(self.get_data(), charData, -1)
+
+    def load_char(self):
+        with open('Data/CharData.plk', 'rb') as charData:
+            self.rect.x, self.rect.y = pickle.load(charData)
