@@ -1,6 +1,8 @@
 import pygame
 import pickle
 
+from pokemon import PygameData
+
 class Player(pygame.sprite.Sprite):
     def __init__(self, groups, objectSprites):
         super().__init__(groups)
@@ -20,6 +22,8 @@ class Player(pygame.sprite.Sprite):
 
         self.objectSprites = objectSprites
 
+        self.pokemonBag = []
+
     def update(self):
         self.input()
 
@@ -29,6 +33,8 @@ class Player(pygame.sprite.Sprite):
         self.rect.y += self.direction.y * 64
         self.collision("vertical")
 
+    def add_pokemon(self, name):
+        self.pokemonBag.append(PygameData(name))
 
     def find_placement(self):
         return self.rect.centery
@@ -71,6 +77,11 @@ class Player(pygame.sprite.Sprite):
                 print('Done Saving')
                 self.prevTick = pygame.time.get_ticks()
 
+            elif keys[pygame.K_TAB]:
+                for pokemon in self.pokemonBag:
+                    print(pokemon.data.name)
+                    self.prevTick = pygame.time.get_ticks()
+
             elif keys[pygame.K_RETURN]:
                 print('Reset(Debug)')
                 self.rect.topleft = (0,0)
@@ -104,12 +115,19 @@ class Player(pygame.sprite.Sprite):
                 self.prevTick = pygame.time.get_ticks()
 
     def get_data(self):
-        return self.rect.x, self.rect.y
+        tempBag = []
+        for pokemon in self.pokemonBag:
+            tempBag.append(pokemon.data)
+        return self.rect.x, self.rect.y, tempBag
 
     def save_char(self):
         with open("Data/CharData.plk", "wb") as charData:
             pickle.dump(self.get_data(), charData, -1)
 
     def load_char(self):
+        tempBag = []
         with open('Data/CharData.plk', 'rb') as charData:
-            self.rect.x, self.rect.y = pickle.load(charData)
+            self.rect.x, self.rect.y, tempBag = pickle.load(charData)
+        
+        for tempPoke in tempBag:
+            PygameData(tempPoke.name)
