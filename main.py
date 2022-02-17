@@ -3,34 +3,56 @@ import sys
 
 from player import Player
 from tile import Tile
+from csv import reader
 
-def main():
+class Game:
+    def __init__(self):
+        self.screen = pygame.display.set_mode((1280,720))
+        pygame.display.set_caption('Adv CP Pokemon Clone')
+        self.clock = pygame.time.Clock()
 
-  screen = pygame.display.set_mode((1280,720))
-  pygame.display.set_caption('Adv CP Pokemon Clone')
-  clock = pygame.time.Clock()
-    
-  sprites = CameraGroup()
-  objectSprites = pygame.sprite.Group()
+        self.sprites = CameraGroup()
+        self.objectSprites = pygame.sprite.Group()
 
-  player = Player(sprites, objectSprites)
-  player.load_char()
-  player.add_pokemon('Charmander')
-  Tile([sprites, objectSprites])
-  
-  while True:
-    for event in pygame.event.get():
-      if event.type == pygame.QUIT:
-        pygame.QUIT
-        sys.exit()
+        self.CreateMap('Map/PokemonCloneTestMap.csv')
 
-    screen.fill('#9edb64')
+    def main(self):
 
-    sprites.custom_draw(player)
-    player.update()
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.QUIT
+                    sys.exit()
 
-    pygame.display.update()
-    clock.tick(60)
+            self.screen.fill('#9edb64')
+
+            self.sprites.custom_draw(self.player)
+            self.player.update()
+
+            pygame.display.update()
+            self.clock.tick(60)
+
+    def CreateMap(self, mapCSV):
+        self.player = Player([self.sprites], 6, 6, self.objectSprites)
+        self.player.load_char()
+
+        terrainLayout = []
+        with open(mapCSV) as levelMap:
+            layout = reader(levelMap, delimiter = ',')
+            for row in layout:
+                terrainLayout.append(list(row))
+
+        for rowIndex, row in enumerate(terrainLayout):
+            for colIndex, col in enumerate(row):
+                x = colIndex
+                y = rowIndex
+                if col == '0':
+                    Tile([self.sprites, self.objectSprites], x, y)
+                elif col == '1':
+                    Tile([self.sprites, self.objectSprites], x, y, 'grass')
+
+
+
 
 class CameraGroup(pygame.sprite.Group):
     def __init__(self):
@@ -45,9 +67,10 @@ class CameraGroup(pygame.sprite.Group):
         self.offset.x = player.rect.centerx - self.half_width
         self.offset.y = player.rect.centery - self.half_height
 
-        for sprite in self.sprites():
+        for sprite in sorted(self.sprites(),key = lambda sprite: sprite.placement):
             offset_pos = sprite.rect.topleft - self.offset
             self.display_surface.blit(sprite.image, offset_pos)
 
 if __name__ == '__main__':
-  main()
+ game = Game()
+ game.main()
