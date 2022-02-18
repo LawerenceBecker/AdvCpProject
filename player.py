@@ -22,7 +22,8 @@ class Player(pygame.sprite.Sprite):
 
         self.direction = pygame.math.Vector2()
         self.placement = 1
-        self.interacting = True
+        self.interactingRL = False
+        self.interactingAB = False
         self.moveCounter = 0
         self.encounterTimer = random.randint(10, 25)
 
@@ -35,7 +36,7 @@ class Player(pygame.sprite.Sprite):
 
         self.rect.x += self.direction.x * 64
         self.collision("horizontal")
-
+        
         self.rect.y += self.direction.y * 64
         self.collision("vertical")
 
@@ -44,17 +45,29 @@ class Player(pygame.sprite.Sprite):
 
             self.pokemonBag.append(PygameData(name))
         else:
-            print('\nYou have t0o many pokemon so you let this one go')
+            print('\nYou have too many pokemon, so you let this one go')
 
     def collision(self, direction):                        
 
         if direction == "horizontal":
             for sprite in self.objectSprites:
                 if sprite.rect.colliderect(self.rect):
-                    if sprite.tileType == 'grass':
+                    if sprite.tileType == '':
 
-                        if self.interacting == True:
-                            self.interacting = False
+                        if self.direction.x > 0:
+                            self.rect.right = sprite.rect.left
+                            self.interactingRL = False
+                            # print(f"wall to the right of me {self.interactingRL}")
+                            
+                        if self.direction.x < 0:
+                            self.rect.left = sprite.rect.right
+                            self.interactingRL = False
+                            # print(f"wall to the left of me {self.interactingRL}")
+
+                    elif sprite.tileType == 'grass':
+
+                        if self.interactingRL == True:
+                            self.interactingRL = False
                             self.moveCounter += 1
 
                             if self.moveCounter == self.encounterTimer:
@@ -62,35 +75,36 @@ class Player(pygame.sprite.Sprite):
                                 self.moveCounter = 0
                                 print('BATTLE') # Adrians battle system here
                                 capture(self, "Charmander")
-                    else:
-                        if self.direction.x > 0:
-                            self.rect.right = sprite.rect.left
-                            
-                        if self.direction.x < 0:
-                            self.rect.left = sprite.rect.right
+                        
                         
 
         if direction == "vertical":
             for sprite in self.objectSprites:
                 if sprite.rect.colliderect(self.rect):
-                    if sprite.tileType == 'grass':
+                    if sprite.tileType == '':
 
-                        if self.interacting == True:
-                            self.interacting = False
+                        if self.direction.y > 0:
+                            self.rect.bottom = sprite.rect.top
+                            self.interactingAB = False
+                            # print(f"wall below me {self.interactingAB}")
+                            
+                        if self.direction.y < 0:
+                            self.rect.top = sprite.rect.bottom
+                            self.interactingAB = False
+                            # print(f"wall above me {self.interactingAB}")
+
+                    elif sprite.tileType == 'grass':
+
+                        if self.interactingAB == True:
+                            self.interactingAB = False
                             self.moveCounter += 1
 
                             if self.moveCounter == self.encounterTimer:
                                 self.encounterTimer = random.randint(10, 25)
                                 self.moveCounter = 0
                                 print('BATTLE') # Adrians battle system here
-
                                 capture(self, "Charmander")
-                    else:
-                        if self.direction.y > 0:
-                            self.rect.bottom = sprite.rect.top
-                            
-                        if self.direction.y < 0:
-                            self.rect.top = sprite.rect.bottom
+
     
     def input(self):
         keys = pygame.key.get_pressed()
@@ -131,25 +145,25 @@ class Player(pygame.sprite.Sprite):
                 self.direction.y = -1
                 self.image = self.moveUp
                 self.prevTick = pygame.time.get_ticks()
-                self.interacting = True
+                self.interactingAB = True
 
             elif keys[pygame.K_s] or keys[pygame.K_DOWN]:
                 self.direction.y = 1
                 self.image = self.moveDown
                 self.prevTick = pygame.time.get_ticks()
-                self.interacting = True
+                self.interactingAB = True
                 
             elif keys[pygame.K_a] or keys[pygame.K_LEFT]:
                 self.direction.x = -1
                 self.image = self.moveLeft
                 self.prevTick = pygame.time.get_ticks()
-                self.interacting = True
+                self.interactingRL = True
 
             elif keys[pygame.K_d] or keys[pygame.K_RIGHT]:
                 self.direction.x = 1
                 self.image = self.moveRight
                 self.prevTick = pygame.time.get_ticks()
-                self.interacting = True
+                self.interactingRL = True
 
     def get_data(self):
         tempBag = []
