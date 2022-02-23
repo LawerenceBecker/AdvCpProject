@@ -124,10 +124,23 @@ class Player(pygame.sprite.Sprite):
                         print(num+1, pokemon.data.name)
                         self.prevTick = pygame.time.get_ticks()
                 elif choice == '2':
-                    for pocket in self.bag:
-                        print(pocket)
-                        for item in self.bag[pocket]:
-                            print(f'  {item.name}')
+                    for index, pocket in enumerate(self.bag):
+                        print(f'{index+1}. {pocket}')
+                    choice = input('> ')
+                    if choice == '1':
+                        des = 'Medicine'
+                    elif choice == '2':
+                        des = 'Pokeballs'    
+                        
+                    for index, item in enumerate(self.bag[des]):
+                        print(f'{des}:')
+                        print(f'  {index+1}. {item.name}')
+
+                    choice = int(input('> '))
+
+                    for index, item in enumerate(self.bag[des]):
+                        if index+1 == choice:
+                            print(f'You used a {item.name}!')
 
             elif keys[pygame.K_RETURN]:
                 print('Reset(Debug)')
