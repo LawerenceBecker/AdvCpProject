@@ -37,6 +37,9 @@ class Game:
         self.player = Player([self.sprites], 6, 6, self.objectSprites)
         self.player.load_char()
         self.player.add_item(Item('Potion', 'Medicine'))
+        self.player.add_pokemon('Charmander')
+        self.player.add_pokemon('Charmander')
+        self.player.add_pokemon('Charmander')
 
         terrainLayout = []
         with open(mapCSV) as levelMap:

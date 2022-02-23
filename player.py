@@ -40,6 +40,13 @@ class Player(pygame.sprite.Sprite):
         self.rect.y += self.direction.y * 64
         self.collision("vertical")
 
+    def remove_item(self, itemObj):
+        for pocket in self.bag:
+            if pocket == itemObj.pocket:
+                for index, item in enumerate(self.bag[pocket]):
+                    if item == itemObj:
+                        self.bag[pocket].pop(index)
+
     def add_item(self, itemObj):
         for pocket in self.bag:
             if pocket == itemObj.pocket:
@@ -65,7 +72,7 @@ class Player(pygame.sprite.Sprite):
                             if self.moveCounter == self.encounterTimer:
                                 self.encounterTimer = randint(10, 25)
                                 self.moveCounter = 0
-                                charman = PygameData("Charmander", None)
+                                charman = PygameData("Charmander")
                                 for pokemon in self.pokemonBag:
                                     if pokemon.data.health >= 1:
                                         curPokemon = pokemon
@@ -120,9 +127,12 @@ class Player(pygame.sprite.Sprite):
                 print('\n1. Pokemon \n2. Bag')
                 choice = input('> ')
                 if choice == '1':
-                    for num, pokemon in enumerate(self.pokemonBag):
-                        print(num+1, pokemon.data.name)
-                        self.prevTick = pygame.time.get_ticks()
+                    if self.pokemonBag != None:
+                        for num, pokemon in enumerate(self.pokemonBag):
+                            print(num+1, pokemon.data.name)
+                            self.prevTick = pygame.time.get_ticks()
+                    else:
+                        print('You have no pokemon')
                 elif choice == '2':
                     for index, pocket in enumerate(self.bag):
                         print(f'{index+1}. {pocket}')
@@ -131,16 +141,20 @@ class Player(pygame.sprite.Sprite):
                         des = 'Medicine'
                     elif choice == '2':
                         des = 'Pokeballs'    
-                        
-                    for index, item in enumerate(self.bag[des]):
-                        print(f'{des}:')
-                        print(f'  {index+1}. {item.name}')
+                    
+                    if len(self.bag[des]) != 0:
+                        for index, item in enumerate(self.bag[des]):
+                            print(f'{des}:')
+                            print(f'  {index+1}. {item.name}')
 
-                    choice = int(input('> '))
+                        choice = int(input('> '))
 
-                    for index, item in enumerate(self.bag[des]):
-                        if index+1 == choice:
-                            print(f'You used a {item.name}!')
+                        for index, item in enumerate(self.bag[des]):
+                            if index+1 == choice:
+                                print(f'You used a {item.name}!')
+                                item.find_use(self)
+                    else:
+                        print('You have no items in that pocket')
 
             elif keys[pygame.K_RETURN]:
                 print('Reset(Debug)')
