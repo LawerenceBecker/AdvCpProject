@@ -23,7 +23,7 @@ class EntityData():
         self.name = name
         self.pokemonType = pokemon[name]['StartStats']['pokemonType']
         self.maxHealth = pokemon[name]['StartStats']['maxHealth']
-        self.health = self.maxHealth -10
+        self.health = self.maxHealth
         self.level = 4
         self.exp = 0
         self.totalExp = 0

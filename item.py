@@ -7,8 +7,14 @@ class Item():
     def find_use(self, player):
         if self.name == 'Potion':
             self.potion(player)
+        elif self.name == 'Poké Ball':
+            self.ball()
+
+    def ball(self):
+        print('You can\'t use that item here')
         
     def potion(self, player):
+        print(f'You used a {self.name}!')
         print('Which one would you like to heal')
         while True:
             for index, pokemon in enumerate(player.pokemonBag):

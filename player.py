@@ -44,13 +44,20 @@ class Player(pygame.sprite.Sprite):
         for pocket in self.bag:
             if pocket == itemObj.pocket:
                 for index, item in enumerate(self.bag[pocket]):
-                    if item == itemObj:
-                        self.bag[pocket].pop(index)
-
-    def add_item(self, itemObj):
+                    if item[0] == itemObj:
+                        item[1] -= 1
+                        if item[1] == 0:
+                            self.bag[pocket].pop(index)
+                            
+    def add_item(self, itemObj, amount):
         for pocket in self.bag:
             if pocket == itemObj.pocket:
-                self.bag[pocket].append(itemObj)
+                for item in self.bag[pocket]:
+                    if item[0] == itemObj:
+                        item[1] += amount
+                        return
+                self.bag[pocket].append([itemObj, amount])
+
 
     def add_pokemon(self, name):
         if len(self.pokemonBag) < 6:
@@ -124,37 +131,39 @@ class Player(pygame.sprite.Sprite):
                 self.prevTick = pygame.time.get_ticks()
 
             elif keys[pygame.K_TAB]:
-                print('\n1. Pokemon \n2. Bag')
-                choice = input('> ')
-                if choice == '1':
-                    if self.pokemonBag != None:
-                        for num, pokemon in enumerate(self.pokemonBag):
-                            print(num+1, pokemon.data.name)
-                            self.prevTick = pygame.time.get_ticks()
-                    else:
-                        print('You have no pokemon')
-                elif choice == '2':
-                    for index, pocket in enumerate(self.bag):
-                        print(f'{index+1}. {pocket}')
+                while True:
+                    print('\n1. Pokemon \n2. Bag')
                     choice = input('> ')
                     if choice == '1':
-                        des = 'Medicine'
+                        if self.pokemonBag != None:
+                            for num, pokemon in enumerate(self.pokemonBag):
+                                print(num+1, pokemon.data.name)
+                                self.prevTick = pygame.time.get_ticks()
+                            return
+                        else:
+                            print('You have no pokemon')
                     elif choice == '2':
-                        des = 'Pokeballs'    
-                    
-                    if len(self.bag[des]) != 0:
-                        for index, item in enumerate(self.bag[des]):
-                            print(f'{des}:')
-                            print(f'  {index+1}. {item.name}')
+                        for index, pocket in enumerate(self.bag):
+                            print(f'{index+1}. {pocket}')
+                        choice = input('> ')
+                        if choice == '1':
+                            des = 'Medicine'
+                        elif choice == '2':
+                            des = 'Pokeballs'    
+                        
+                        if len(self.bag[des]) != 0 and des != None:
+                            for index, item in enumerate(self.bag[des]):
+                                print(f'{des}:')
+                                print(f'  {index+1}. {item[0].name} x{item[1]}')
 
-                        choice = int(input('> '))
+                            choice = int(input('> '))
 
-                        for index, item in enumerate(self.bag[des]):
-                            if index+1 == choice:
-                                print(f'You used a {item.name}!')
-                                item.find_use(self)
-                    else:
-                        print('You have no items in that pocket')
+                            for index, item in enumerate(self.bag[des]):
+                                if index+1 == choice:
+                                    item[0].find_use(self)
+                                    return
+                        else:
+                            print('You have no items in that pocket')
 
             elif keys[pygame.K_RETURN]:
                 print('Reset(Debug)')
