@@ -3,6 +3,7 @@ import sys
 
 from player import Player
 from npc import NPC
+from item import Item
 from tile import Tile
 from csv import reader
 
@@ -36,6 +37,11 @@ class Game:
     def CreateMap(self, mapCSV):
         self.player = Player([self.sprites], 6, 6, self.objectSprites)
         self.player.load_char()
+        self.player.add_item(Item('Potion', 'Medicine'), 3)
+        self.player.add_item(Item('Poké Ball', 'Pokeballs'), 10)
+        self.player.add_pokemon('Charmander')
+        self.player.add_pokemon('Charmander')
+        self.player.add_pokemon('Charmander')
 
         NPC([self.sprites, self.objectSprites], 2, 7, 'shop', [['Potion', '100'], ['Poké Ball', '100']])
 

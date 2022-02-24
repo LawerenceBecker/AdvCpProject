@@ -1,6 +1,6 @@
 import pygame
 import pickle
-import random
+from random import *
 
 from pokemon import PygameData
 from capture import *
@@ -25,7 +25,7 @@ class Player(pygame.sprite.Sprite):
         self.interactingRL = False
         self.interactingAB = False
         self.moveCounter = 0
-        self.encounterTimer = random.randint(10, 25)
+        self.encounterTimer = randint(10, 25)
 
         self.objectSprites = objectSprites
         self.interactableSprite = None
@@ -38,7 +38,7 @@ class Player(pygame.sprite.Sprite):
 
         self.rect.x += self.direction.x * 64
         self.collision("horizontal")
-        
+
         self.rect.y += self.direction.y * 64
         self.collision("vertical")
 
@@ -62,10 +62,9 @@ class Player(pygame.sprite.Sprite):
 
     def add_pokemon(self, name):
         if len(self.pokemonBag) < 6:
-
             self.pokemonBag.append(PygameData(name))
         else:
-            print('\nYou have too many pokemon, so you let this one go')
+            print('\nYou have t0o many pokemon, so you let this one go')
 
     def collision(self, direction):                        
 
@@ -131,7 +130,6 @@ class Player(pygame.sprite.Sprite):
                                 self.moveCounter = 0
                                 print('BATTLE') # Adrians battle system here
                                 capture(self, "Charmander")
-
     
     def input(self):
         keys = pygame.key.get_pressed()
