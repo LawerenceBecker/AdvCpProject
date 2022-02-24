@@ -19,6 +19,10 @@ class NPC(pygame.sprite.Sprite):
 
     def shop(self, player):
         while True:
+            if player.money == 0:
+                print('You have no money')
+                return
+                
             print('\nWhat do you want to buy?')
             print(f'Player Money: {player.money}\n')
     
@@ -32,7 +36,7 @@ class NPC(pygame.sprite.Sprite):
                     item[0].name
                     choice = int(input('How many > '))
                     if player.money >= (item[1] * choice):
-                        player.money -= item[1]
+                        player.money -= item[1] * choice
                         player.add_item(item[0], choice)
                         print(f'You bought {item[0].name} for {item[1]*choice}')
                         return
