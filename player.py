@@ -18,7 +18,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft = (x*64,y*64))
 
         self.prevTick = pygame.time.get_ticks()
-        self.moveTimer = 100
+        self.moveTimer = 200
 
         self.direction = pygame.math.Vector2()
         self.placement = 1
@@ -28,6 +28,7 @@ class Player(pygame.sprite.Sprite):
         self.encounterTimer = random.randint(10, 25)
 
         self.objectSprites = objectSprites
+        self.interactableSprite = None
 
         self.pokemonBag = []
 
@@ -49,11 +50,18 @@ class Player(pygame.sprite.Sprite):
 
     def collision(self, direction):                        
 
+        self.interactableSprite = None
+        for sprite in self.objectSprites:
+            if hasattr(sprite, 'job'):
+                if sprite.hitbox.colliderect(self.rect):
+                    self.interactableSprite = sprite
+        
         if direction == "horizontal":
             for sprite in self.objectSprites:
                 if sprite.rect.colliderect(self.rect):
                     if sprite.tileType == '':
 
+                        
                         if self.direction.x > 0:
                             self.rect.right = sprite.rect.left
                             self.interactingRL = False
@@ -110,9 +118,9 @@ class Player(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_LSHIFT]:
-            self.moveTimer = 50
-        else: 
             self.moveTimer = 100
+        else: 
+            self.moveTimer = 200
 
         self.direction = pygame.math.Vector2()
 
@@ -141,6 +149,12 @@ class Player(pygame.sprite.Sprite):
                 print('Done Loading')
                 self.prevTick = pygame.time.get_ticks()
 
+            if keys[pygame.K_z]:
+                if self.interactableSprite:
+                    if self.interactableSprite.job == 'shop':
+                        self.interactableSprite.shop()
+                    self.prevTick = pygame.time.get_ticks()
+            
             if keys[pygame.K_w] or keys[pygame.K_UP]:
                 self.direction.y = -1
                 self.image = self.moveUp
