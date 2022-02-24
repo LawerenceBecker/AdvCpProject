@@ -153,7 +153,9 @@ class Player(pygame.sprite.Sprite):
                 while True:
                     print('\n1. Pokemon \n2. Bag')
                     choice = input('> ')
-                    if choice == '1':
+                    if choice == "":
+                        return
+                    elif choice == '1':
                         if self.pokemonBag != None:
                             for num, pokemon in enumerate(self.pokemonBag):
                                 print(num+1, pokemon.data.name)
@@ -165,7 +167,9 @@ class Player(pygame.sprite.Sprite):
                         for index, pocket in enumerate(self.bag):
                             print(f'{index+1}. {pocket}')
                         choice = input('> ')
-                        if choice == '1':
+                        if choice == "":
+                            return
+                        elif choice == '1':
                             des = 'Medicine'
                         elif choice == '2':
                             des = 'Pokeballs'    
@@ -177,6 +181,9 @@ class Player(pygame.sprite.Sprite):
 
                             choice = int(input('> '))
 
+                            if choice == "":
+                                return
+                            
                             for index, item in enumerate(self.bag[des]):
                                 if index+1 == choice:
                                     item[0].find_use(self)
@@ -184,7 +191,7 @@ class Player(pygame.sprite.Sprite):
                         else:
                             print('You have no items in that pocket')
 
-            elif keys[pygame.K_RETURN]:
+            elif keys[pygame.K_ESCAPE]:
                 print('Reset(Debug)')
                 self.rect.topleft = (6*64,6*64)
                 self.save_char()
