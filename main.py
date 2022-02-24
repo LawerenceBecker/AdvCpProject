@@ -2,7 +2,10 @@ import pygame
 import sys
 
 from player import Player
+<<<<<<< HEAD
 from npc import NPC
+=======
+>>>>>>> 97ab58a80c8b27a5d6ef4b25c9769835ef21ea85
 from item import Item
 from tile import Tile
 from csv import reader
@@ -42,8 +45,11 @@ class Game:
         self.player.add_pokemon('Charmander')
         self.player.add_pokemon('Charmander')
         self.player.add_pokemon('Charmander')
+<<<<<<< HEAD
 
         NPC([self.sprites, self.objectSprites], 2, 7, 'shop', [['Potion', '100'], ['Poké Ball', '100']])
+=======
+>>>>>>> 97ab58a80c8b27a5d6ef4b25c9769835ef21ea85
 
         terrainLayout = []
         with open(mapCSV) as levelMap:
