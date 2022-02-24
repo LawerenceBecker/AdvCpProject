@@ -10,9 +10,15 @@ def capture(player, pokemon):
         print('Throw a Ball?')
         for index, item in enumerate(player.bag['Pokeballs']):
             print(f'{index+1}. {item[0].name} x{item[1]}')
-    
+        print(f'{index+2}. Give up')
+
+        
         ball = int(input('> '))
-    
+
+        if ball == index+2:
+            print(f'You let {pokemon.data.name} run away')
+            return
+        
         for index, item in enumerate(player.bag['Pokeballs']):
             if ball == index+1:
                 print(f'You throw a {item[0].name}')

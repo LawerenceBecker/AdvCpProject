@@ -28,21 +28,22 @@ class NPC(pygame.sprite.Sprite):
     
             for index,item in enumerate(self.shopInv):
                 print(f'{index+1}. {item[0].name} ${item[1]}')
+            print(f'{index+2}. End')
     
-            choice = input('> ')
+            choice = int(input('> '))
 
-            if choice == "":
+            if choice == index+2:
                 return
             
             for index,item in enumerate(self.shopInv):
                 if index+1 == int(choice):
                     item[0].name
-                    choice = input('How many > ')
-                    if choice == "":
+                    choice = int(input('How many > '))
+                    if choice == 0:
                         return
-                    elif player.money >= (item[1] * int(choice)):
-                        player.money -= item[1] * int(choice)
-                        player.add_item(item[0], int(choice))
+                    elif player.money >= (item[1] * choice):
+                        player.money -= item[1] * choice
+                        player.add_item(item[0], choice)
                         print(f'You bought {item[0].name} for {item[1]*int(choice)}')
                         return
                     else:

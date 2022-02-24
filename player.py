@@ -152,11 +152,11 @@ class Player(pygame.sprite.Sprite):
 
             elif keys[pygame.K_TAB]:
                 while True:
-                    print('\n1. Pokemon \n2. Bag')
-                    choice = input('> ')
-                    if choice == "":
+                    print('\n1. Pokemon \n2. Bag \n3. End')
+                    choice = int(input('> '))
+                    if choice == 3:
                         return
-                    elif choice == '1':
+                    elif choice == 1:
                         if self.pokemonBag != None:
                             for num, pokemon in enumerate(self.pokemonBag):
                                 print(num+1, pokemon.data.nickName)
@@ -164,25 +164,27 @@ class Player(pygame.sprite.Sprite):
                             return
                         else:
                             print('You have no pokemon')
-                    elif choice == '2':
+                    elif choice == 2:
                         for index, pocket in enumerate(self.bag):
                             print(f'{index+1}. {pocket}')
-                        choice = input('> ')
-                        if choice == "":
+                        print(f'{index+2}. End')
+                        choice = int(input('> '))
+                        
+                        if choice == index+2:
                             return
-                        elif choice == '1':
-                            des = 'Medicine'
-                        elif choice == '2':
-                            des = 'Pokeballs'    
+                        for index, pocket in enumerate(self.bag):
+                            if choice == index+1:
+                                des = pocket  
                         
                         if len(self.bag[des]) != 0 and des != None:
-                            print(f'{des}:')
+                            print(f'\n{des}:')
                             for index, item in enumerate(self.bag[des]):
-                                print(f'  {index+1}. {item[0].name} x{item[1]}')
-
+                                print(f'{index+1}. {item[0].name} x{item[1]}')
+                            print(f'{index+2}. End')
+                            
                             choice = int(input('> '))
 
-                            if choice == "":
+                            if choice == index+2:
                                 return
                             
                             for index, item in enumerate(self.bag[des]):
