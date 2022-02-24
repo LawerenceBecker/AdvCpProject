@@ -42,11 +42,7 @@ class Game:
         self.player.add_pokemon('Charmander')
         self.player.add_pokemon('Charmander')
         self.player.add_pokemon('Charmander')
-<<<<<<< HEAD
-
-        NPC([self.sprites, self.objectSprites], 2, 7, 'shop', [['Potion', '100'], ['Poké Ball', '100']])
-=======
->>>>>>> 97ab58a80c8b27a5d6ef4b25c9769835ef21ea85
+        NPC([self.sprites, self.objectSprites], 2, 7, 'shop', [[Item('Potion','Medicine'), 100], [Item('Poké Ball', 'Pokeballs'), 100]])
 
         terrainLayout = []
         with open(mapCSV) as levelMap:

@@ -32,6 +32,7 @@ class Player(pygame.sprite.Sprite):
 
         self.pokemonBag = []
         self.bag = {'Medicine': [], 'Pokeballs': []}
+        self.money = 300
 
     def update(self):
         self.input()
@@ -55,7 +56,7 @@ class Player(pygame.sprite.Sprite):
         for pocket in self.bag:
             if pocket == itemObj.pocket:
                 for item in self.bag[pocket]:
-                    if item[0] == itemObj:
+                    if item[0].name == itemObj.name:
                         item[1] += amount
                         return
                 self.bag[pocket].append([itemObj, amount])
@@ -170,8 +171,8 @@ class Player(pygame.sprite.Sprite):
                             des = 'Pokeballs'    
                         
                         if len(self.bag[des]) != 0 and des != None:
+                            print(f'{des}:')
                             for index, item in enumerate(self.bag[des]):
-                                print(f'{des}:')
                                 print(f'  {index+1}. {item[0].name} x{item[1]}')
 
                             choice = int(input('> '))
@@ -199,7 +200,7 @@ class Player(pygame.sprite.Sprite):
             if keys[pygame.K_z]:
                 if self.interactableSprite:
                     if self.interactableSprite.job == 'shop':
-                        self.interactableSprite.shop()
+                        self.interactableSprite.shop(self)
                     self.prevTick = pygame.time.get_ticks()
             
             if keys[pygame.K_w] or keys[pygame.K_UP]:
