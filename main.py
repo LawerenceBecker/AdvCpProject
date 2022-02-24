@@ -2,6 +2,7 @@ import pygame
 import sys
 
 from player import Player
+from item import Item
 from tile import Tile
 from csv import reader
 
@@ -35,6 +36,11 @@ class Game:
     def CreateMap(self, mapCSV):
         self.player = Player([self.sprites], 6, 6, self.objectSprites)
         self.player.load_char()
+        self.player.add_item(Item('Potion', 'Medicine'), 3)
+        self.player.add_item(Item('Poké Ball', 'Pokeballs'), 10)
+        self.player.add_pokemon('Charmander')
+        self.player.add_pokemon('Charmander')
+        self.player.add_pokemon('Charmander')
 
         terrainLayout = []
         with open(mapCSV) as levelMap:

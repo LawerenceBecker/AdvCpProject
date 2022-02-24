@@ -11,6 +11,13 @@ class PygameData(pygame.sprite.Sprite):
         self.data = EntityData(name)
         self.positionIndex = 0
 
+    def heal(self, amount):
+        self.data.health += amount
+        if self.data.health >= self.data.maxHealth:
+            self.data.health = self.data.maxHealth
+        print(f'You healed {self.data.name} for {amount} points')
+        print(f'{self.data.name}\'s hp: {self.data.health}')
+
 class EntityData():
     def __init__(self, name):
         self.name = name
