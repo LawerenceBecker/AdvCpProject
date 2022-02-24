@@ -2,6 +2,7 @@ import pygame
 import sys
 
 from player import Player
+from pokemon import PygameData
 from npc import NPC
 from item import Item
 from tile import Tile
@@ -39,9 +40,7 @@ class Game:
         self.player.load_char()
         self.player.add_item(Item('Potion', 'Medicine'), 3)
         self.player.add_item(Item('Poké Ball', 'Pokeballs'), 10)
-        self.player.add_pokemon('Charmander')
-        self.player.add_pokemon('Charmander')
-        self.player.add_pokemon('Charmander')
+        self.player.add_pokemon(PygameData('Charmander'), 'Chary')
         NPC([self.sprites, self.objectSprites], 2, 7, 'shop', [[Item('Potion','Medicine'), 100], [Item('Poké Ball', 'Pokeballs'), 100]])
 
         terrainLayout = []

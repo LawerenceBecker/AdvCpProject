@@ -61,11 +61,12 @@ class Player(pygame.sprite.Sprite):
                         return
                 self.bag[pocket].append([itemObj, amount])
 
-    def add_pokemon(self, name):
+    def add_pokemon(self, pokemon, nickName):
         if len(self.pokemonBag) < 6:
-            self.pokemonBag.append(PygameData(name))
+            pokemon.data.nickName = nickName
+            self.pokemonBag.append(pokemon)
         else:
-            print('\nYou have t0o many pokemon, so you let this one go')
+            print('\nYou have too many pokemon, so you let this one go')
 
     def collision(self, direction):                        
 
@@ -101,7 +102,7 @@ class Player(pygame.sprite.Sprite):
                                 self.encounterTimer = random.randint(10, 25)
                                 self.moveCounter = 0
                                 print('BATTLE') # Adrians battle system here
-                                capture(self, "Charmander")
+                                capture(self, PygameData("Charmander"))
                         
                         
 
@@ -130,7 +131,7 @@ class Player(pygame.sprite.Sprite):
                                 self.encounterTimer = random.randint(10, 25)
                                 self.moveCounter = 0
                                 print('BATTLE') # Adrians battle system here
-                                capture(self, "Charmander")
+                                capture(self, PygameData("Charmander"))
     
     def input(self):
         keys = pygame.key.get_pressed()
@@ -158,7 +159,7 @@ class Player(pygame.sprite.Sprite):
                     elif choice == '1':
                         if self.pokemonBag != None:
                             for num, pokemon in enumerate(self.pokemonBag):
-                                print(num+1, pokemon.data.name)
+                                print(num+1, pokemon.data.nickName)
                                 self.prevTick = pygame.time.get_ticks()
                             return
                         else:

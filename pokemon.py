@@ -21,6 +21,7 @@ class PygameData(pygame.sprite.Sprite):
 class EntityData():
     def __init__(self, name):
         self.name = name
+        self.nickName = name
         self.pokemonType = pokemon[name]['StartStats']['pokemonType']
         self.maxHealth = pokemon[name]['StartStats']['maxHealth']
         self.health = self.maxHealth
