@@ -60,10 +60,6 @@ class Player(pygame.sprite.Sprite):
                         return
                 self.bag[pocket].append([itemObj, amount])
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 97ab58a80c8b27a5d6ef4b25c9769835ef21ea85
     def add_pokemon(self, name):
         if len(self.pokemonBag) < 6:
             self.pokemonBag.append(PygameData(name))
