@@ -2,6 +2,7 @@ import pygame
 import sys
 
 from player import Player
+from npc import NPC
 from item import Item
 from tile import Tile
 from csv import reader
@@ -41,6 +42,7 @@ class Game:
         self.player.add_pokemon('Charmander')
         self.player.add_pokemon('Charmander')
         self.player.add_pokemon('Charmander')
+        NPC([self.sprites, self.objectSprites], 2, 7, 'shop', [[Item('Potion','Medicine'), 100], [Item('Poké Ball', 'Pokeballs'), 100]])
 
         terrainLayout = []
         with open(mapCSV) as levelMap:

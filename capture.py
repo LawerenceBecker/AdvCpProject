@@ -4,21 +4,21 @@ import random
 def capture(player, pokemonName):
     print(f'\nWild {pokemonName} is avilable to capture')
     print('Throw Ball?')
-    print('1. Pokeball')
-    print('2. Greatball')
-    print('3. Ultraball')
+    for index, item in enumerate(player.bag['Pokeballs']):
+        print(f'{index+1}. {item[0].name} x{item[1]}')
 
-    ball = input('> ')
+    ball = int(input('> '))
 
-    if ball == '1':
-        print('You throw a Pokeball')
-        catchChance = 20
-    elif ball == '2':
-        print('You throw a Greatball')
-        catchChance = 40
-    elif ball == '3':
-        print('You throw a Ultraball')
-        catchChance = 60
+    for index, item in enumerate(player.bag['Pokeballs']):
+        if ball == index+1:
+            print(f'You throw a {item[0].name}')
+            if item[0].name == 'Poké Ball':
+                catchChance = 20
+            elif item[0].name == 'Great Ball':
+                catchChance = 40
+            elif item[0].name == 'Ultra Ball':
+                catchChance = 60
+            player.remove_item(item[0])
 
     randChance = random.randint(0, 100)
 

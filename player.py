@@ -18,7 +18,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft = (x*64,y*64))
 
         self.prevTick = pygame.time.get_ticks()
-        self.moveTimer = 100
+        self.moveTimer = 200
 
         self.direction = pygame.math.Vector2()
         self.placement = 1
@@ -28,9 +28,11 @@ class Player(pygame.sprite.Sprite):
         self.encounterTimer = randint(10, 25)
 
         self.objectSprites = objectSprites
+        self.interactableSprite = None
 
         self.pokemonBag = []
         self.bag = {'Medicine': [], 'Pokeballs': []}
+        self.money = 300
 
     def update(self):
         self.input()
@@ -54,11 +56,10 @@ class Player(pygame.sprite.Sprite):
         for pocket in self.bag:
             if pocket == itemObj.pocket:
                 for item in self.bag[pocket]:
-                    if item[0] == itemObj:
+                    if item[0].name == itemObj.name:
                         item[1] += amount
                         return
                 self.bag[pocket].append([itemObj, amount])
-
 
     def add_pokemon(self, name):
         if len(self.pokemonBag) < 6:
@@ -68,11 +69,18 @@ class Player(pygame.sprite.Sprite):
 
     def collision(self, direction):                        
 
+        self.interactableSprite = None
+        for sprite in self.objectSprites:
+            if hasattr(sprite, 'job'):
+                if sprite.hitbox.colliderect(self.rect):
+                    self.interactableSprite = sprite
+        
         if direction == "horizontal":
             for sprite in self.objectSprites:
                 if sprite.rect.colliderect(self.rect):
                     if sprite.tileType == '':
 
+                        
                         if self.direction.x > 0:
                             self.rect.right = sprite.rect.left
                             self.interactingRL = False
@@ -128,9 +136,9 @@ class Player(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_LSHIFT]:
-            self.moveTimer = 50
-        else: 
             self.moveTimer = 100
+        else: 
+            self.moveTimer = 200
 
         self.direction = pygame.math.Vector2()
 
@@ -145,7 +153,9 @@ class Player(pygame.sprite.Sprite):
                 while True:
                     print('\n1. Pokemon \n2. Bag')
                     choice = input('> ')
-                    if choice == '1':
+                    if choice == "":
+                        return
+                    elif choice == '1':
                         if self.pokemonBag != None:
                             for num, pokemon in enumerate(self.pokemonBag):
                                 print(num+1, pokemon.data.name)
@@ -157,18 +167,23 @@ class Player(pygame.sprite.Sprite):
                         for index, pocket in enumerate(self.bag):
                             print(f'{index+1}. {pocket}')
                         choice = input('> ')
-                        if choice == '1':
+                        if choice == "":
+                            return
+                        elif choice == '1':
                             des = 'Medicine'
                         elif choice == '2':
                             des = 'Pokeballs'    
                         
                         if len(self.bag[des]) != 0 and des != None:
+                            print(f'{des}:')
                             for index, item in enumerate(self.bag[des]):
-                                print(f'{des}:')
                                 print(f'  {index+1}. {item[0].name} x{item[1]}')
 
                             choice = int(input('> '))
 
+                            if choice == "":
+                                return
+                            
                             for index, item in enumerate(self.bag[des]):
                                 if index+1 == choice:
                                     item[0].find_use(self)
@@ -176,7 +191,7 @@ class Player(pygame.sprite.Sprite):
                         else:
                             print('You have no items in that pocket')
 
-            elif keys[pygame.K_RETURN]:
+            elif keys[pygame.K_ESCAPE]:
                 print('Reset(Debug)')
                 self.rect.topleft = (6*64,6*64)
                 self.save_char()
@@ -189,6 +204,12 @@ class Player(pygame.sprite.Sprite):
                 print('Done Loading')
                 self.prevTick = pygame.time.get_ticks()
 
+            if keys[pygame.K_z]:
+                if self.interactableSprite:
+                    if self.interactableSprite.job == 'shop':
+                        self.interactableSprite.shop(self)
+                    self.prevTick = pygame.time.get_ticks()
+            
             if keys[pygame.K_w] or keys[pygame.K_UP]:
                 self.direction.y = -1
                 self.image = self.moveUp
