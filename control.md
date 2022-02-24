@@ -1,22 +1,22 @@
-# Control
-
-## Move
+# ControlS
+>
+> ## Move
 > W, A, S, D or Arrow Keys
 
-## Open Inventory:
+> ## Open Inventory:
 > Tab
-
-## Leave Inventory
+>
+> ## Leave Inventory
 > Enter empty input
-
-## Interact:
+>
+> ## Interact:
 > Z
-
-## Save
+>
+> ## Save
 > Backspace
-
-## Load
+>
+> ## Load
 > Delete
-
-## Reset
+> 
+> ## Reset
 > Escape
