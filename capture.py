@@ -1,5 +1,13 @@
+import time
+import sys
 import pygame
 import random
+
+def delayPrint(s):
+    for c in s:
+        sys.stdout.write(c)
+        sys.stdout.flush()
+        time.sleep(0.025)
 
 def ball_shake(catchRate, ballPick, f):
     if ballPick == 'Poké Ball': ball = 255
@@ -11,14 +19,14 @@ def ball_shake(catchRate, ballPick, f):
     x = (d * f) / 255
 
     if x < 30:
-        print('shake.')
+        delayPrint('\nshake.\n')
     elif x < 70:
-        print('shake.')
-        print('shake..')
+        delayPrint('\nshake.')
+        delayPrint('\nshake..\n')
     else:
-        print('shake.')
-        print('shake..')
-        print('shake...')
+        delayPrint('\nshake.')
+        delayPrint('\nshake..')
+        delayPrint('\nshake...\n')
         
 
 def capture(player, pokemon):
@@ -29,8 +37,8 @@ def capture(player, pokemon):
             return
         print('\nThrow a Ball?')
         for index, item in enumerate(player.bag['Pokeballs']):
-            print(f'{index+1}. {item[0].name} x{item[1]}')
-        print(f'{index+2}. Give up')
+            delayPrint(f'\n{index+1}. {item[0].name} x{item[1]}')
+        delayPrint(f'\n{index+2}. Give up\n')
 
         
         ball = int(input('> '))
@@ -52,10 +60,10 @@ def capture(player, pokemon):
                     ball = 4
                     break
                 elif item[0].name == 'Master Ball':
-                    print('shake.')
-                    print('shake..')
-                    print('shake...')
-                    print('You Caught it')
+                    delayPrint('\nshake.')
+                    delayPrint('\nshake..')
+                    delayPrint('\nshake...')
+                    delayPrint('\nYou Caught it!\n')
 
                     nickName = input("Give it a name \n> ")
         
@@ -74,10 +82,10 @@ def capture(player, pokemon):
         f = (pokemon.data.maxHealth * 255 * 4) / (pokemon.data.health * ball)
         
         if f >= m:
-            print('shake.')
-            print('shake..')
-            print('shake...')
-            print('You Caught it')
+            delayPrint('\nshake.')
+            delayPrint('\nshake..')
+            delayPrint('\nshake...\n')
+            delayPrint('\nYou Caught it\n')
 
             nickName = input("Give it a name \n> ")
 
