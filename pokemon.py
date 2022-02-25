@@ -11,6 +11,26 @@ class PygameData(pygame.sprite.Sprite):
         self.data = EntityData(name)
         self.positionIndex = 0
 
+    def stats(self, whichStat):
+        if whichStat == 'Health':
+            return self.data.health
+        elif whichStat == 'MaxHealth':
+            return self.data.maxHealth
+        elif whichStat == 'PokemonType':
+            return self.data.pokemonType
+        elif whichStat == 'Level':
+            return self.data.level
+        elif whichStat == 'Attack':
+            return self.data.attack
+        elif whichStat == 'Defense':
+            return self.data.defense
+        elif whichStat == 'spAttak':
+            return self.data.spAttack
+        elif whichStat == 'spDefense':
+            return self.data.spDefense
+        elif whichStat == 'Speed':
+            return self.data.speed
+
     def heal(self, amount):
         self.data.health += amount
         if self.data.health >= self.data.maxHealth:
@@ -21,6 +41,7 @@ class PygameData(pygame.sprite.Sprite):
 class EntityData():
     def __init__(self, name):
         self.name = name
+        self.nickName = name
         self.pokemonType = pokemon[name]['StartStats']['pokemonType']
         self.maxHealth = pokemon[name]['StartStats']['maxHealth']
         self.health = self.maxHealth
