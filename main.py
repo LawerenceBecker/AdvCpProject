@@ -8,6 +8,14 @@ from item import Item
 from tile import Tile
 from csv import reader
 
+# Testing
+from moveDatabase import moves
+from pokemonData import pokemon
+
+print(moves['Quick']['Fire']['Ember']['Damage'])
+print(pokemon['Charmander']['Type'])
+# Testing
+
 class Game:
     def __init__(self):
         self.screen = pygame.display.set_mode((1280,720))

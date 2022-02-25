@@ -1,9 +1,42 @@
-
-moves = {
-    'Scratch': {'power': 40, 'moveType': 'Normal', 'accuracy': 100, 'maxPP': 35},
-    'Growl': {'power': 0, 'moveType': 'Normal', 'accuracy': 100, 'maxPP': 40},
-    'Ember': {'power': 40, 'moveType': 'Fire', 'accuracy': 100, 'maxPP': 25},
-    'Smokescreen': {'power': 0, 'moveType': 'Normal', 'accuracy': 100, 'maxPP': 20},
-    'Dragon Breath': {'power': 60, 'moveType': 'Dragon', 'accuracy': 100, 'maxPP': 20},
-
-}
+moves = {'Quick': {
+          'Fire': {
+            'Ember': {
+              'Speed': 4, 
+              'Damage': 4}
+          },
+          'Grass': {
+            'Vine Whip': {
+              'Speed': 4,
+              'Damage': 4}
+          },
+          'Water': {
+            'Water Gun': {
+              'Speed': 4,
+              'Damage': 4}
+          },
+          'Normal': {
+            'Tackle': {
+              'Speed': 4,
+              'Damage': 4}
+          }
+},
+         
+        'Special': {
+         'Fire': {
+           'Fire Punch': {
+             'Damage': 8}
+         },
+         'Grass': {
+           'Solar Beam': {
+             'Damage': 8}
+         },
+         'Water': {
+           'Surf': {
+             'Damage': 8}
+         },
+         'Normal': {
+           'Return': {
+             'Damage': 8}
+         }
+        }
+      }

@@ -3,6 +3,8 @@ import sys
 import pygame
 import random
 
+from moveDatabase import moves
+
 def delayPrint(s):
     for c in s:
         sys.stdout.write(c)
