@@ -136,7 +136,7 @@ class Player(pygame.sprite.Sprite):
     def input(self):
         keys = pygame.key.get_pressed()
 
-        if keys[pygame.K_LSHIFT]:
+        if keys[pygame.K_x]:
             self.moveTimer = 100
         else: 
             self.moveTimer = 200

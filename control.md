@@ -2,7 +2,9 @@
 >
 > ## Move
 > W, A, S, D or Arrow Keys
-
+>
+> ## Run 
+> X
 > ## Open Inventory:
 > Tab
 >
