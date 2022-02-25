@@ -158,9 +158,18 @@ class Player(pygame.sprite.Sprite):
                         return
                     elif choice == 1:
                         if self.pokemonBag != None:
-                            for num, pokemon in enumerate(self.pokemonBag):
-                                print(num+1, pokemon.data.nickName)
-                                self.prevTick = pygame.time.get_ticks()
+                            for index, pokemon in enumerate(self.pokemonBag):
+                                print(f'{index+1}. {pokemon.data.nickName}')
+                            print(f'{index+2}. End')
+
+                            choice = int(input('> '))
+                            
+                            for index, pokemon in enumerate(self.pokemonBag):
+                                if choice == index+1:
+                                    print(pokemon.stats('Health'), pokemon.stats('MaxHealth'))
+                                    break
+                            
+                            self.prevTick = pygame.time.get_ticks()
                             return
                         else:
                             print('You have no pokemon')
