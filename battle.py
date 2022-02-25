@@ -10,14 +10,14 @@ class Battle:
   def go(self):
     attack = input('ATTACK > ')
       
-    p1health = self.pokemon1.health;
-    p1cp = self.pokemon1.cp; # add cp to pokemondata
-    p1type = self.pokemon1.type;
+    p1health = self.pokemon1.stats('Health')
+    p1cp = self.pokemon1.stats('CP') # add cp to pokemondata
+    p1type = self.pokemon1.stats('Type')
     p1spCharge = 0
     
-    p2health = self.pokemon2.health;
-    p2cp = self.pokemon2.cp;
-    p2type = self.pokemon2.type;
+    p2health = self.pokemon2.stats('Health')
+    p2cp = self.pokemon2.stats('CP')
+    p2type = self.pokemon2.stats('Type')
     p2spCharge = 0
 
     if attack == '':

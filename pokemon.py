@@ -16,8 +16,10 @@ class PygameData(pygame.sprite.Sprite):
             return self.data.health
         elif whichStat == 'MaxHealth':
             return self.data.maxHealth
-        elif whichStat == 'PokemonType':
-            return self.data.pokemonType
+        elif whichStat == 'Type':
+            return self.data.type
+        elif whichStat == 'CP':
+            return self.data.cp
         elif whichStat == 'Level':
             return self.data.level
         elif whichStat == 'Attack':
@@ -42,20 +44,15 @@ class EntityData():
     def __init__(self, name):
         self.name = name
         self.nickName = name
-        self.pokemonType = pokemon[name]['StartStats']['pokemonType']
         self.maxHealth = pokemon[name]['StartStats']['maxHealth']
         self.health = self.maxHealth
         self.level = 4
         self.exp = 0
         self.totalExp = 0
-        self.moves = []
 
-        for lv in range(1, self.level+1):
-            if pokemon[name]['MoveList'][lv]:
-                if len(self.moves) == 4:
-                    self.moves.pop(0)
-                self.moves.append(Move(pokemon[name]['MoveList'][lv]))
-
+        self.cp = pokemon[name]['CP']
+        self.type = pokemon[name]['Type']
+        
         self.attack = pokemon[name]['StartStats']['attack']
         self.defense = pokemon[name]['StartStats']['defense']
         self.spAttack = pokemon[name]['StartStats']['spAttack']
