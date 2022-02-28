@@ -1,12 +1,23 @@
 import pygame
+import sys, time
+
+def delayPrint(s):
+    for c in s:
+        sys.stdout.write(c)
+        sys.stdout.flush()
+        time.sleep(0.025)
+
 
 class NPC(pygame.sprite.Sprite):
-    def __init__(self, groups, x, y, job, shopInv):
+    def __init__(self, groups, x, y, job, specialInfo=None, specialInteraction=None):
 
         super().__init__(groups)
 
         self.image = pygame.Surface((64,64))
-        self.image.fill('blue')
+        if job == 'shop': self.image.fill('blue')
+        elif job == 'pokecenter': self.image.fill('red')
+        elif job == 'person': self.image.fill('grey')
+            
 
         self.rect = self.image.get_rect(topleft = (x*64,y*64))
         self.hitbox = self.rect.inflate(6,6)
@@ -15,8 +26,57 @@ class NPC(pygame.sprite.Sprite):
         self.job = job
         self.tileType = ''
 
-        self.shopInv = shopInv
+        self.shopInv = specialInfo
+        self.dialogArray = specialInfo
 
+        self.specialInteraction = specialInteraction
+
+    def person(self, player):
+        if self.specialInteraction:
+            self.specialInteraction(self, player)
+            return
+        for text in self.dialogArray:
+            delayPrint(f'\n{text}')
+            input('')
+
+    def testSpecial(self, player):
+        print('\n'*3)
+
+        print('\nI have the abilty to do unique stuff like,')
+        player.rect.x += 64
+        delayPrint('\nmoving you')
+    
+    def pokeCenter(self, player):
+        while True:
+            print('\nWelcome to the Pokemon Center')
+            choice = input('Would you like to have us heal your pokemon? \n1. Yes \n2. No \n> ')
+            if choice == '1':
+                print('Just one moment')
+
+                if len(player.pokemonBag) == 1: print('-------\n| o . |\n| . . |\n| . . |\n-------')
+                elif len(player.pokemonBag) == 2: print('-------\n| o o |\n|     |\n|     |\n-------')
+                elif len(player.pokemonBag) == 3: print('-------\n| o o |\n| o   |\n|     |\n-------')
+                elif len(player.pokemonBag) == 4: print('-------\n| o o |\n| o o |\n|     |\n-------')
+                elif len(player.pokemonBag) == 5: print('-------\n| o o |\n| o o |\n| o   |\n-------')
+                elif len(player.pokemonBag) == 6: print('-------\n| o o |\n| o o |\n| o o |\n-------')
+
+                delayPrint('\nding.')
+                delayPrint('\nding..')
+                delayPrint('\nding!')
+
+                for pokemon in player.pokemonBag:
+                    pokemon.data.health = pokemon.stats('MaxHealth')
+
+                delayPrint('\n\nYour pokemon are fully healed')
+                delayPrint('\nPlease come back again')
+
+                return
+                
+            elif choice == '2':
+                print('Please come back again')
+                return
+            
+    
     def shop(self, player):
         while True:
             if player.money == 0:

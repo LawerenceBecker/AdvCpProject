@@ -43,8 +43,12 @@ class Game:
         self.player.add_pokemon(PygameData('Charmander'), 'Test')
         self.player.add_item(Item('Potion', 'Medicine'), 3)
         self.player.add_item(Item('Poké Ball', 'Pokeballs'), 10)
-        NPC([self.sprites, self.objectSprites], 2, 7, 'shop', [[Item('Potion','Medicine'), 100], [Item('Poké Ball', 'Pokeballs'), 100], [Item('Great Ball', 'Pokeballs'), 200], [Item('Ultra Ball', 'Pokeballs'), 300], [Item('Master Ball', 'Pokeballs'), 100]])
+        NPC([self.sprites, self.objectSprites], 1, 7, 'shop', [[Item('Potion','Medicine'), 100], [Item('Poké Ball', 'Pokeballs'), 100], [Item('Great Ball', 'Pokeballs'), 200], [Item('Ultra Ball', 'Pokeballs'), 300], [Item('Master Ball', 'Pokeballs'), 100]])
+        NPC([self.sprites, self.objectSprites], 1, 9, 'pokecenter')
 
+        NPC([self.sprites, self.objectSprites], 4, 6, 'person', ['This is a test', 'Wow dialog', 'The guy by the grass is a special npc'])
+        NPC([self.sprites, self.objectSprites], 4, 10, 'person', None, NPC.testSpecial)
+        
         terrainLayout = []
         with open(mapCSV) as levelMap:
             layout = reader(levelMap, delimiter = ',')

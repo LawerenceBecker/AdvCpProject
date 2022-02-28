@@ -221,6 +221,11 @@ class Player(pygame.sprite.Sprite):
                 if self.interactableSprite:
                     if self.interactableSprite.job == 'shop':
                         self.interactableSprite.shop(self)
+                    elif self.interactableSprite.job == 'pokecenter':
+                        self.interactableSprite.pokeCenter(self)
+                    elif self.interactableSprite.job == 'person':
+                        self.interactableSprite.person(self)
+                        
                     self.prevTick = pygame.time.get_ticks()
             
             if keys[pygame.K_w] or keys[pygame.K_UP]:
