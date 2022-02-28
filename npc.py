@@ -9,7 +9,7 @@ def delayPrint(s):
 
 
 class NPC(pygame.sprite.Sprite):
-    def __init__(self, groups, x, y, job, shopInv=None):
+    def __init__(self, groups, x, y, job, specialInfo=None, specialInteraction=None):
 
         super().__init__(groups)
 
@@ -26,8 +26,14 @@ class NPC(pygame.sprite.Sprite):
         self.job = job
         self.tileType = ''
 
-        self.shopInv = shopInv
+        self.shopInv = specialInfo
+        self.dialogArray = specialInfo
 
+    def person(self, player):
+        for text in self.dialogArray:
+            delayPrint(f'\n{text}')
+            input('')
+    
     def pokeCenter(self, player):
         while True:
             print('\nWelcome to the Pokemon Center')

@@ -40,8 +40,10 @@ class Game:
         self.player.load_char()
         self.player.add_item(Item('Potion', 'Medicine'), 3)
         self.player.add_item(Item('Poké Ball', 'Pokeballs'), 10)
-        NPC([self.sprites, self.objectSprites], 2, 7, 'shop', [[Item('Potion','Medicine'), 100], [Item('Poké Ball', 'Pokeballs'), 100], [Item('Great Ball', 'Pokeballs'), 200], [Item('Ultra Ball', 'Pokeballs'), 300], [Item('Master Ball', 'Pokeballs'), 100]])
-        NPC([self.sprites, self.objectSprites], 2, 9, 'pokecenter')
+        NPC([self.sprites, self.objectSprites], 1, 7, 'shop', [[Item('Potion','Medicine'), 100], [Item('Poké Ball', 'Pokeballs'), 100], [Item('Great Ball', 'Pokeballs'), 200], [Item('Ultra Ball', 'Pokeballs'), 300], [Item('Master Ball', 'Pokeballs'), 100]])
+        NPC([self.sprites, self.objectSprites], 1, 9, 'pokecenter')
+
+        NPC([self.sprites, self.objectSprites], 3, 6, 'person', ['This is a test', 'Wow dialog', 'The guy by the grass is a special npc'])
         
         terrainLayout = []
         with open(mapCSV) as levelMap:
