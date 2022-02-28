@@ -41,7 +41,8 @@ class Game:
         self.player.add_item(Item('Potion', 'Medicine'), 3)
         self.player.add_item(Item('Poké Ball', 'Pokeballs'), 10)
         NPC([self.sprites, self.objectSprites], 2, 7, 'shop', [[Item('Potion','Medicine'), 100], [Item('Poké Ball', 'Pokeballs'), 100], [Item('Great Ball', 'Pokeballs'), 200], [Item('Ultra Ball', 'Pokeballs'), 300], [Item('Master Ball', 'Pokeballs'), 100]])
-
+        NPC([self.sprites, self.objectSprites], 2, 9, 'pokecenter')
+        
         terrainLayout = []
         with open(mapCSV) as levelMap:
             layout = reader(levelMap, delimiter = ',')
