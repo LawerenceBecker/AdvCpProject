@@ -9,7 +9,7 @@ from item import Item
 from tile import Tile
 from csv import reader
 
-print(effective("Fire", "Steel"))
+print(effective("fire", "steel"))
 
 class Game:
     def __init__(self):

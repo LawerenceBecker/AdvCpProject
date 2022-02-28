@@ -44,7 +44,7 @@ class EntityData():
     def __init__(self, name):
         self.name = name
         self.nickName = name
-        self.maxHealth = pokemon[name]['StartStats']['maxHealth']
+        self.maxHealth = pokemon[name]['baseStats']['maxHealth']
         self.health = self.maxHealth
         self.level = 4
         self.exp = 0
@@ -53,11 +53,11 @@ class EntityData():
         self.cp = pokemon[name]['CP']
         self.type = pokemon[name]['Type']
         
-        self.attack = pokemon[name]['StartStats']['attack']
-        self.defense = pokemon[name]['StartStats']['defense']
-        self.spAttack = pokemon[name]['StartStats']['spAttack']
-        self.spDefense = pokemon[name]['StartStats']['spDefense']
-        self.speed = pokemon[name]['StartStats']['speed']
+        self.attack = pokemon[name]['baseStats']['attack']
+        self.defense = pokemon[name]['baseStats']['defense']
+        self.spAttack = pokemon[name]['baseStats']['spAttack']
+        self.spDefense = pokemon[name]['baseStats']['spDefense']
+        self.speed = pokemon[name]['baseStats']['speed']
 
 class Move():
     def __init__(self, name):
