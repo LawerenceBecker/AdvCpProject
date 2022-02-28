@@ -1,12 +1,12 @@
 moves = {'Quick': {
           'Fire': {
             'Ember': {
-              'Speed': 4, 
-              'Damage': 4}
+              'Cooldown': 4, 
+              'Power': 4}
           },
           'Grass': {
             'Vine Whip': {
-              'Speed': 4,
+              'Cooldown': 4,
               'Damage': 4}
           },
           'Water': {

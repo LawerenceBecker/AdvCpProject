@@ -3,18 +3,12 @@ import sys
 
 from player import Player
 from pokemon import PygameData
+from moveEffectiveness import types, effectivity
 from npc import NPC
 from item import Item
 from tile import Tile
 from csv import reader
 
-# Testing
-from moveDatabase import moves
-from pokemonData import pokemon
-
-print(moves['Quick']['Fire']['Ember']['Damage'])
-print(pokemon['Charmander']['Type'])
-# Testing
 
 class Game:
     def __init__(self):

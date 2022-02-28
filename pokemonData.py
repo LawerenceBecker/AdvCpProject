@@ -2,55 +2,39 @@ from moveDatabase import moves
 
 pokemon = {
   'Charmander': {
-    'StartStats': {
-        'maxHealth': 39,
-        'attack': 52,
-        'defense': 43,
-        'spAttack': 60,
-        'spDefense': 50,
-        'speed': 65
-    },
-    'CP': 250,
-    'Type': 'Fire'
+    'baseStats': {
+        'maxHealth': 118,
+        'attack': 116,
+        'defense': 93,
+        'type': 'Fire'
+    }
   },
   
   'Bulbasaur': {
-    'StartStats': {
-        'maxHealth': 45,
-        'attack': 49,
-        'defense': 49,
-        'spAttack': 65,
-        'spDefense': 65,
-        'speed': 45
-    },
-    'CP': 250,
-    'Type': 'Grass'
+    'baseStats': {
+        'maxHealth': 128,
+        'attack': 118,
+        'defense': 111,
+        'type': 'Grass'
+    }
   },
   
   'Squirtle': {
-    'StartStats': {
-        'maxHealth': 44,
-        'attack': 48,
-        'defense': 65,
-        'spAttack': 50,
-        'spDefense': 64,
-        'speed': 43
-    },
-    'CP': 250,
-    'Type': 'Water'
+    'baseStats': {
+        'maxHealth': 127,
+        'attack': 94,
+        'defense': 121,
+        'type': 'Water'
+    }
   },
   
   'Pidgey': {
-    'StartStats': {
-        'maxHealth': 40,
-        'attack': 45,
-        'defense': 40,
-        'spAttack': 35,
-        'spDefense': 35,
-        'speed': 56
-    },
-    'CP': 250,
-    'Type': 'Normal'
+    'baseStats': {
+        'maxHealth': 120,
+        'attack': 85,
+        'defense': 73,
+        'type': 'Normal'
+    }
   }
 }
 
