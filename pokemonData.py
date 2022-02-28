@@ -2,6 +2,7 @@ from moveDatabase import moves
 
 pokemon = {
   'Charmander': {
+    'CP': 100,
     'baseStats': {
         'maxHealth': 118,
         'attack': 116,
@@ -11,6 +12,7 @@ pokemon = {
   },
   
   'Bulbasaur': {
+    'CP': 100,
     'baseStats': {
         'maxHealth': 128,
         'attack': 118,
@@ -20,6 +22,7 @@ pokemon = {
   },
   
   'Squirtle': {
+    'CP': 100,
     'baseStats': {
         'maxHealth': 127,
         'attack': 94,

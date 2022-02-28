@@ -1,42 +1,42 @@
 moves = {'Quick': {
           'Fire': {
             'Ember': {
-              'Cooldown': 4, 
+              'Speed': 4, 
               'Power': 4}
           },
           'Grass': {
             'Vine Whip': {
-              'Cooldown': 4,
-              'Damage': 4}
+              'Speed': 4,
+              'Power': 4}
           },
           'Water': {
             'Water Gun': {
               'Speed': 4,
-              'Damage': 4}
+              'Power': 4}
           },
           'Normal': {
             'Tackle': {
               'Speed': 4,
-              'Damage': 4}
+              'Power': 4}
           }
 },
          
         'Special': {
          'Fire': {
            'Fire Punch': {
-             'Damage': 8}
+             'Power': 8}
          },
          'Grass': {
            'Solar Beam': {
-             'Damage': 8}
+             'Power': 8}
          },
          'Water': {
            'Surf': {
-             'Damage': 8}
+             'Power': 8}
          },
          'Normal': {
            'Return': {
-             'Damage': 8}
+             'Power': 8}
          }
         }
       }

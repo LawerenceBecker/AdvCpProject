@@ -19,19 +19,11 @@ class PygameData(pygame.sprite.Sprite):
         elif whichStat == 'Type':
             return self.data.type
         elif whichStat == 'CP':
-            return self.data.cp
-        elif whichStat == 'Level':
-            return self.data.level
+            return self.data.combatPower
         elif whichStat == 'Attack':
             return self.data.attack
         elif whichStat == 'Defense':
             return self.data.defense
-        elif whichStat == 'spAttak':
-            return self.data.spAttack
-        elif whichStat == 'spDefense':
-            return self.data.spDefense
-        elif whichStat == 'Speed':
-            return self.data.speed
 
     def heal(self, amount):
         self.data.health += amount
@@ -50,21 +42,15 @@ class EntityData():
         self.exp = 0
         self.totalExp = 0
 
-        self.cp = pokemon[name]['CP']
-        self.type = pokemon[name]['Type']
+        self.pokemonType = pokemon[name]['baseStats']['type']
+
+        self.normalMove = Move('Fire', "Quick", 'Ember')
         
         self.attack = pokemon[name]['baseStats']['attack']
         self.defense = pokemon[name]['baseStats']['defense']
-        self.spAttack = pokemon[name]['baseStats']['spAttack']
-        self.spDefense = pokemon[name]['baseStats']['spDefense']
-        self.speed = pokemon[name]['baseStats']['speed']
 
 class Move():
-    def __init__(self, name):
+    def __init__(self, type, typeMove, name):
         self.moveName = name
-        self.moveType = moves[name]['moveType']
-        self.power = moves[name]['power']
-        self.accuracy = moves[name]['accuracy']
-        
-        self.maxPP = moves[name]['maxPP']
-        self.currentPP = self.maxPP
+        self.moveType = type
+        self.power = moves[typeMove][type][name]['Power']

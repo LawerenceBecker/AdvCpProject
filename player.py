@@ -4,6 +4,7 @@ from random import *
 
 from pokemon import PygameData
 from capture import *
+from battle import Battle
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, groups, x, y, objectSprites):
@@ -101,7 +102,7 @@ class Player(pygame.sprite.Sprite):
                             if self.moveCounter == self.encounterTimer:
                                 self.encounterTimer = random.randint(10, 25)
                                 self.moveCounter = 0
-                                print('BATTLE') # Adrians battle system here
+                                Battle(self.pokemonBag[0], PygameData('Bulbasaur'))
                                 capture(self, PygameData("Charmander"))
                         
                         
@@ -130,7 +131,7 @@ class Player(pygame.sprite.Sprite):
                             if self.moveCounter == self.encounterTimer:
                                 self.encounterTimer = random.randint(10, 25)
                                 self.moveCounter = 0
-                                print('BATTLE') # Adrians battle system here
+                                Battle(self.pokemonBag[0], PygameData('Bulbasaur'))
                                 capture(self, PygameData("Charmander"))
     
     def input(self):

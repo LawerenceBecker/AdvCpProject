@@ -1,6 +1,9 @@
 # pokemon go damage mechanics  
 # https://gamepress.gg/pokemongo/damage-mechanics
 
+# Current damage calculation
+# https://bulbapedia.bulbagarden.net/wiki/Damage
+
 # pokemon go CP mechanics 
 # https://gamepress.gg/pokemongo/pokemon-stats-advanced#ivs
 
@@ -8,34 +11,58 @@
 # https://gamepress.gg/pokemongo/cp-multiplier
 
 import pygame
+import math
 from moveDatabase import moves
 from moveEffectiveness import effective
 
 class Battle:
   def __init__(self, pokemon1, pokemon2):
-    self.pokemon1 = pokemon1.data;
-    self.pokemon2 = pokemon2.data;
+    self.pokemon1 = pokemon1
+    self.pokemon2 = pokemon2
 
-  
+    self.go()
+
+  def damage(self, move, dealingPokemon, takingPokemon, trainer=1):
+
+      if move.moveType == dealingPokemon.data.pokemonType: stab = 1.2
+      else: stab = 1
+
+      modifier = effective(dealingPokemon.data.pokemonType, takingPokemon.data.pokemonType)[1] * stab * trainer
+
+      damage = math.floor((0.5 * move.power * (dealingPokemon.stats('Attack') / takingPokemon.stats('Defense'))) * modifier + 1 )
+
+      print(damage)
+
+      return damage
+    
   def go(self):
-    
-    attack = input('ATTACK > ')
-      
-    p1health = self.pokemon1.stats('maxHealth')
-    p1cp = self.pokemon1.stats('CP') 
-    p1type = self.pokemon1.stats('Type')
-    p1spCharge = 0
-    
-    p2health = self.pokemon2.stats('maxHealth')
-    p2cp = self.pokemon2.stats('CP')
-    p2type = self.pokemon2.stats('Type')
-    p2spCharge = 0
 
-    if attack == '':
-      print('you did damage')
-      p2health -= 
-    else:
-      print('no damage for you :)')
+    while True:
+
+        if self.pokemon2.data.health <= 0:
+            print('You won')
+            break
+        print(f'\nEnemy\'s Health: {self.pokemon2.data.health} / {self.pokemon2.data.maxHealth}')
+        print(f'Your Health: {self.pokemon1.data.health} / {self.pokemon1.data.maxHealth}')
+            
+        attack = input('\nATTACK > ')
+          
+        # p1health = self.pokemon1.stats('maxHealth')
+        # # p1cp = self.pokemon1.stats('CP') 
+        # p1type = self.pokemon1.stats('Type')
+        # p1spCharge = 0
+        
+        # p2health = self.pokemon2.stats('maxHealth')
+        # # p2cp = self.pokemon2.stats('CP')
+        # p2type = self.pokemon2.stats('Type')
+        # p2spCharge = 0
+    
+        if attack == '':
+          print('you did damage')
+          damage = self.damage(self.pokemon1.data.normalMove, self.pokemon1, self.pokemon2)
+          self.pokemon2.data.health -= damage
+        else:
+          print('no damage for you :)')
 
 
 # Things we need:

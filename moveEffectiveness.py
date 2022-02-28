@@ -7,13 +7,13 @@ def effective(attPokeType, defPokeType):
     efficacy = effectivity[types[attPokeType]][types[defPokeType]]
   
     if efficacy == 1.6:
-      return "Super effective!"
+      return "Super effective!", 1.6
     elif efficacy == .625:
-      return "Not very effective..."
+      return "Not very effective...", .625
     elif efficacy == .39:
-      return "Defending pokémon is immune!"
+      return "Defending pokémon is immune!", .39
     else:
-      return "No effectivity"
+      return "No effectivity", 0
   except:
     return "Invalid types"
 
