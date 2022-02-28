@@ -29,10 +29,22 @@ class NPC(pygame.sprite.Sprite):
         self.shopInv = specialInfo
         self.dialogArray = specialInfo
 
+        self.specialInteraction = specialInteraction
+
     def person(self, player):
+        if self.specialInteraction:
+            self.specialInteraction(self, player)
+            return
         for text in self.dialogArray:
             delayPrint(f'\n{text}')
             input('')
+
+    def testSpecial(self, player):
+        print('\n'*3)
+
+        print('\nI have the abilty to do unique stuff like,')
+        player.rect.x += 64
+        delayPrint('\nmoving you')
     
     def pokeCenter(self, player):
         while True:
