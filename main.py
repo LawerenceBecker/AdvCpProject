@@ -3,12 +3,13 @@ import sys
 
 from player import Player
 from pokemon import PygameData
-from moveEffectiveness import types, effectivity
+from moveEffectiveness import effective
 from npc import NPC
 from item import Item
 from tile import Tile
 from csv import reader
 
+print(effective("Fire", "Steel"))
 
 class Game:
     def __init__(self):

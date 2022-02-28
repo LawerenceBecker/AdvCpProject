@@ -9,6 +9,7 @@
 
 import pygame
 from moveDatabase import moves
+from moveEffectiveness import effective
 
 class Battle:
   def __init__(self, pokemon1, pokemon2):
@@ -17,10 +18,11 @@ class Battle:
 
   
   def go(self):
+    
     attack = input('ATTACK > ')
       
     p1health = self.pokemon1.stats('maxHealth')
-    p1cp = self.pokemon1.stats('CP') # add cp to pokemondata
+    p1cp = self.pokemon1.stats('CP') 
     p1type = self.pokemon1.stats('Type')
     p1spCharge = 0
     
@@ -34,12 +36,6 @@ class Battle:
       p2health -= 
     else:
       print('no damage for you :)')
-    
-
-  
-
-
-
 
 
 # Things we need:
