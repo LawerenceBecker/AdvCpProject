@@ -15,10 +15,15 @@ import math
 from moveDatabase import moves
 from moveEffectiveness import effective
 
+from pokemon import PygameData
+from capture import *
+
 class Battle:
-  def __init__(self, pokemon1, pokemon2):
+  def __init__(self, player, pokemon1, pokemon2):
     self.pokemon1 = pokemon1
     self.pokemon2 = pokemon2
+    self.player = player
+    self.ticks = pygame.time.get_ticks()
 
     self.go()
 
@@ -36,23 +41,45 @@ class Battle:
       return damage
     
   def go(self):
-
-    while True:
-
-        if self.pokemon2.data.health <= 0:
-            print('You won')
-            break
-        print(f'\nEnemy\'s Health: {self.pokemon2.data.health} / {self.pokemon2.data.maxHealth}')
-        print(f'Your Health: {self.pokemon1.data.health} / {self.pokemon1.data.maxHealth}')
-            
-        attack = input('\nATTACK > ')
+      
+    battle = True
+    print("BATTLE (z to attack)")
     
-        if attack == '':
-          print('you did damage')
-          damage = self.damage(self.pokemon1.data.normalMove, self.pokemon1, self.pokemon2)
-          self.pokemon2.data.health -= damage
-        else:
-          print('no damage for you :)')
+    while battle:
+          
+        event_list = pygame.event.get()
+        for event in event_list:
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_z and pygame.time.get_ticks() - self.ticks >= self.pokemon1.data.normalMove.cooldown:
+              
+                self.ticks = pygame.time.get_ticks()
+              
+                print('you did damage')
+              
+                damage = self.damage(self.pokemon1.data.normalMove, self.pokemon1, self.pokemon2)
+                self.pokemon2.data.health -= damage
+
+                print(f'\nEnemy\'s Health: {self.pokemon2.data.health} / {self.pokemon2.data.maxHealth}')
+                print(f'Your Health: {self.pokemon1.data.health} / {self.pokemon1.data.maxHealth}')
+              
+            # should open menu here
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_x:
+              choice = input("\n\nWhat would you like to do? \n1. Pokemon \n2. Bag \n3. Run \n4. Go Back \n> ")
+              if choice == '2':
+                  choice = input('\n1. Items \n2. Pokeballs \n> ')
+                  if choice == '1':
+                    pass
+                  elif choice == '2':
+                    bagLen = len(self.player.pokemonBag)
+                    capture(self.player, self.pokemon2)
+                    if len(self.player.pokemonBag) > bagLen:
+                        return
+        if self.pokemon2.data.health <= 0:
+            self.pokemon2.data.health = 0
+            print('You won')
+            battle = False
+        elif self.pokemon1.data.health <= 0:
+          self.pokemon1.data.health = 0
+          print('You lose')
 
 
 # Things we need:

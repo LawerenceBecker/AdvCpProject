@@ -38,13 +38,12 @@ def capture(player, pokemon):
         print('\nThrow a Ball?')
         for index, item in enumerate(player.bag['Pokeballs']):
             delayPrint(f'\n{index+1}. {item[0].name} x{item[1]}')
-        delayPrint(f'\n{index+2}. Give up\n')
+        delayPrint(f'\n{index+2}. Go Back\n')
 
         
         ball = int(input('> '))
 
         if ball == index+2:
-            print(f'You let {pokemon.data.name} run away')
             return
         
         for index, item in enumerate(player.bag['Pokeballs']):

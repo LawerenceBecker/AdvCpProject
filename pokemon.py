@@ -70,3 +70,5 @@ class Move():
         self.moveName = name
         self.moveType = type
         self.power = moves[typeMove][type][name]['Power']
+        self.cooldown = moves[typeMove][type][name]['Cooldown']
+        self.fillMeter = moves[typeMove][type][name]['FillMeter']
