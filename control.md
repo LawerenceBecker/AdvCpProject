@@ -1,24 +1,29 @@
-# ControlS
+# Controls
 >
-> ## Move
+> ## Move:
 > W, A, S, D or Arrow Keys
 >
-> ## Run 
+> ## Run / Bag:
 > X
+> 
 > ## Open Inventory:
 > Tab
 >
-> ## Leave Inventory
+> ## Leave Inventory:
 > Enter empty input
 >
-> ## Interact:
+> ## Interact / Attack*:
 > Z
 >
-> ## Save
+> ## Save:
 > Backspace
 >
-> ## Load
+> ## Load:
 > Delete
 > 
-> ## Reset
+> ## Reset:
 > Escape
+
+<br />  
+<br />  
+*Only in battle

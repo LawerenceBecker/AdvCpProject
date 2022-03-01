@@ -102,8 +102,7 @@ class Player(pygame.sprite.Sprite):
                             if self.moveCounter == self.encounterTimer:
                                 self.encounterTimer = random.randint(10, 25)
                                 self.moveCounter = 0
-                                Battle(self.pokemonBag[0], PygameData('Bulbasaur', 4))
-                                capture(self, PygameData("Charmander",4))
+                                Battle(self, self.pokemonBag[0], PygameData('Bulbasaur', 4))
                         
                         
 
@@ -131,8 +130,7 @@ class Player(pygame.sprite.Sprite):
                             if self.moveCounter == self.encounterTimer:
                                 self.encounterTimer = random.randint(10, 25)
                                 self.moveCounter = 0
-                                Battle(self.pokemonBag[0], PygameData('Bulbasaur', 4))
-                                capture(self, PygameData("Charmander", 4))
+                                Battle(self, self.pokemonBag[0], PygameData('Bulbasaur', 4))
     
     def input(self):
         keys = pygame.key.get_pressed()

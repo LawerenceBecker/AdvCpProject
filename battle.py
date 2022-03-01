@@ -15,10 +15,16 @@ import math
 from moveDatabase import moves
 from moveEffectiveness import effective
 
+from pokemon import PygameData
+from capture import *
+
 class Battle:
-  def __init__(self, pokemon1, pokemon2):
+  def __init__(self, player, pokemon1, pokemon2):
     self.pokemon1 = pokemon1
     self.pokemon2 = pokemon2
+    self.player = player
+    self.playerTicks = pygame.time.get_ticks()
+    self.cpuTicks = pygame.time.get_ticks()
 
     self.go()
 
@@ -36,25 +42,58 @@ class Battle:
       return damage
     
   def go(self):
-
-    while True:
-
-        if self.pokemon2.data.health <= 0:
-            print('You won')
-            break
-        print(f'\nEnemy\'s Health: {self.pokemon2.data.health} / {self.pokemon2.data.maxHealth}')
-        print(f'Your Health: {self.pokemon1.data.health} / {self.pokemon1.data.maxHealth}')
-            
-        attack = input('\nATTACK > ')
+      
+    battle = True
+    print("BATTLE (z to attack)")
     
-        if attack == '':
-          print('you did damage')
-          damage = self.damage(self.pokemon1.data.normalMove, self.pokemon1, self.pokemon2)
-          self.pokemon2.data.health -= damage
-        else:
-          print('no damage for you :)')
+    while battle:
+          
+        event_list = pygame.event.get()
+        for event in event_list:
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_z and pygame.time.get_ticks() - self.playerTicks >= self.pokemon1.data.normalMove.cooldown:
+              
+                self.playerTicks = pygame.time.get_ticks()
+              
+                print('you did damage')
+                  
+              
+                damage = self.damage(self.pokemon1.data.normalMove, self.pokemon1, self.pokemon2)
+                self.pokemon2.data.health -= damage
 
+            
+            # should open menu here
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_x:
+              run = input("Would you like to run away? >> ")
+              if run == 'y' or run == 'yes':
+                print("You ran away successfully")
+                battle = False
+              else:
+                print("You didn't run away")
+                break
 
+        
+
+      
+        if self.pokemon2.data.health <= 0:
+            self.pokemon2.data.health = 0
+            print('You won')
+            capture(self.player, self.pokemon2)
+            battle = False
+        elif self.pokemon1.data.health <= 0:
+          self.pokemon1.data.health = 0
+          print('You lose')
+
+        if pygame.time.get_ticks() - self.cpuTicks >= self.pokemon2.data.normalMove.cooldown:
+          self.cpuTicks = pygame.time.get_ticks()
+              
+          print('cpu did damage')
+                  
+              
+          damage = self.damage(self.pokemon2.data.normalMove, self.pokemon2, self.pokemon1)
+          
+          self.pokemon1.data.health -= damage
+          print(f'\nEnemy\'s Health: {self.pokemon2.data.health} / {self.pokemon2.data.maxHealth}')
+          print(f'Your Health: {self.pokemon1.data.health} / {self.pokemon1.data.maxHealth}')
 # Things we need:
 
 # Pokemon Stats:
