@@ -20,7 +20,7 @@ class NPC(pygame.sprite.Sprite):
             
 
         self.rect = self.image.get_rect(topleft = (x*64,y*64))
-        self.hitbox = self.rect.inflate(6,6)
+        self.hitbox = self.rect.inflate(1,1)
         self.placement = 1
 
         self.job = job
