@@ -38,12 +38,8 @@ class Game:
 
     def CreateMap(self, mapCSV):
         self.player = Player([self.sprites], 6, 6, self.objectSprites)
-<<<<<<< HEAD
-        self.player.add_pokemon(PygameData("Charmander", 5), 'Char')
-=======
         self.player.load_char()
         PickupItem([self.sprites, self.objectSprites], 1, 1, Item('Potion', "Medicine"))
->>>>>>> a0fd23d9ea7fa43a5e97a77855a07b03dadd02fb
         self.player.add_item(Item('Potion', 'Medicine'), 3)
         self.player.add_item(Item('Poké Ball', 'Pokeballs'), 10)
         NPC([self.sprites, self.objectSprites], 1, 7, 'shop', [[Item('Potion','Medicine'), 100], [Item('Poké Ball', 'Pokeballs'), 100], [Item('Great Ball', 'Pokeballs'), 200], [Item('Ultra Ball', 'Pokeballs'), 300], [Item('Master Ball', 'Pokeballs'), 100]])
