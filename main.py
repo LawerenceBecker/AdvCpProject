@@ -3,6 +3,7 @@ import sys
 
 from player import Player
 from pokemon import PygameData
+from pickupItem import PickupItem
 from npc import NPC
 from item import Item
 from tile import Tile
@@ -38,10 +39,15 @@ class Game:
     def CreateMap(self, mapCSV):
         self.player = Player([self.sprites], 6, 6, self.objectSprites)
         self.player.load_char()
+        PickupItem([self.sprites, self.objectSprites], 1, 1, Item('Potion', "Medicine"))
         self.player.add_item(Item('Potion', 'Medicine'), 3)
         self.player.add_item(Item('Poké Ball', 'Pokeballs'), 10)
-        NPC([self.sprites, self.objectSprites], 2, 7, 'shop', [[Item('Potion','Medicine'), 100], [Item('Poké Ball', 'Pokeballs'), 100], [Item('Great Ball', 'Pokeballs'), 200], [Item('Ultra Ball', 'Pokeballs'), 300], [Item('Master Ball', 'Pokeballs'), 100]])
+        NPC([self.sprites, self.objectSprites], 1, 7, 'shop', [[Item('Potion','Medicine'), 100], [Item('Poké Ball', 'Pokeballs'), 100], [Item('Great Ball', 'Pokeballs'), 200], [Item('Ultra Ball', 'Pokeballs'), 300], [Item('Master Ball', 'Pokeballs'), 100]])
+        NPC([self.sprites, self.objectSprites], 1, 9, 'pokecenter')
 
+        NPC([self.sprites, self.objectSprites], 4, 6, 'person', ['This is a test', 'Wow dialog', 'The guy by the grass is a special npc'])
+        NPC([self.sprites, self.objectSprites], 4, 10, 'person', None, NPC.testSpecial)
+        
         terrainLayout = []
         with open(mapCSV) as levelMap:
             layout = reader(levelMap, delimiter = ',')
