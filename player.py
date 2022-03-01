@@ -221,6 +221,7 @@ class Player(pygame.sprite.Sprite):
             if keys[pygame.K_z]:
                 if self.interactableSprite:
 <<<<<<< HEAD
+<<<<<<< HEAD
                     if self.interactableSprite.job == 'shop':
                         self.interactableSprite.shop(self)
                     elif self.interactableSprite.job == 'pokecenter':
@@ -228,6 +229,8 @@ class Player(pygame.sprite.Sprite):
                     elif self.interactableSprite.job == 'person':
                         self.interactableSprite.person(self)
 =======
+=======
+>>>>>>> a84fe5a55f07a19258fcb7323833061da05873c7
                     if hasattr(self.interactableSprite, 'job'):
                         if self.interactableSprite.job == 'shop':
                             self.interactableSprite.shop(self)
@@ -240,6 +243,9 @@ class Player(pygame.sprite.Sprite):
                         self.add_item(self.interactableSprite.item, 1)
                         self.interactableSprite.kill()
                     
+<<<<<<< HEAD
+>>>>>>> a84fe5a55f07a19258fcb7323833061da05873c7
+=======
 >>>>>>> a84fe5a55f07a19258fcb7323833061da05873c7
                         
                     self.prevTick = pygame.time.get_ticks()
