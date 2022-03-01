@@ -9,8 +9,6 @@ from item import Item
 from tile import Tile
 from csv import reader
 
-print(effective("fire", "steel"))
-
 class Game:
     def __init__(self):
         self.screen = pygame.display.set_mode((1280,720))
@@ -40,7 +38,7 @@ class Game:
 
     def CreateMap(self, mapCSV):
         self.player = Player([self.sprites], 6, 6, self.objectSprites)
-        self.player.add_pokemon(PygameData('Charmander'), 'Test')
+        self.player.load_char()
         self.player.add_item(Item('Potion', 'Medicine'), 3)
         self.player.add_item(Item('Poké Ball', 'Pokeballs'), 10)
         NPC([self.sprites, self.objectSprites], 1, 7, 'shop', [[Item('Potion','Medicine'), 100], [Item('Poké Ball', 'Pokeballs'), 100], [Item('Great Ball', 'Pokeballs'), 200], [Item('Ultra Ball', 'Pokeballs'), 300], [Item('Master Ball', 'Pokeballs'), 100]])

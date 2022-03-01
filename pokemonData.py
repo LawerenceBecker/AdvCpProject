@@ -1,10 +1,27 @@
 from moveDatabase import moves
 
+cpMult = {
+    1: 0.094,
+    2: 0.16639787,
+    3: 0.21573247,
+    4: 0.25572005,
+    5: 0.29024988,
+    6: 0.3210876,
+    7: 0.34921268,
+    8: 0.3752356,
+    9: 0.39956728,
+    10: 0.4225,
+    11: 0.44310755,
+    12: 0.4627984,
+    13: 0.48168495,
+    14: 0.49985844,
+    15: 0.51739395
+}
+
 pokemon = {
   'Charmander': {
-    'CP': 100,
     'baseStats': {
-        'maxHealth': 118,
+        'hp': 118,
         'attack': 116,
         'defense': 93,
         'type': 'Fire'
@@ -12,9 +29,8 @@ pokemon = {
   },
   
   'Bulbasaur': {
-    'CP': 100,
     'baseStats': {
-        'maxHealth': 128,
+        'hp': 128,
         'attack': 118,
         'defense': 111,
         'type': 'Grass'
@@ -22,9 +38,8 @@ pokemon = {
   },
   
   'Squirtle': {
-    'CP': 100,
     'baseStats': {
-        'maxHealth': 127,
+        'hp': 127,
         'attack': 94,
         'defense': 121,
         'type': 'Water'
@@ -33,7 +48,7 @@ pokemon = {
   
   'Pidgey': {
     'baseStats': {
-        'maxHealth': 120,
+        'hp': 120,
         'attack': 85,
         'defense': 73,
         'type': 'Normal'
@@ -44,7 +59,7 @@ pokemon = {
 # -----------------------------------
 
 # pokemon = {
-#     'Charmander': {
+# hp  'Charmander': {
 #         'StartStats': {
 #             'pokemonType': 'Fire',
 #             'maxHealth': 39,
@@ -54,7 +69,7 @@ pokemon = {
 #             'spDefense': 50,
 #             'speed': 65
 #         },
-#         'MoveList': {
+# hp     'MoveList': {
 #             1: 'Scratch',
 #             2: 'Growl',
 #             3: None,

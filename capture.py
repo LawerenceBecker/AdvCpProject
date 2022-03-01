@@ -92,7 +92,7 @@ def capture(player, pokemon):
             if nickName == None:
                 nickName = pokemon.data.name
 
-            print(f'{nickName} joins your party')
+            print(f'A CP: {pokemon.data.cp} {nickName} joins your party')
             
             player.add_pokemon(pokemon, nickName)
             return

@@ -46,16 +46,6 @@ class Battle:
         print(f'Your Health: {self.pokemon1.data.health} / {self.pokemon1.data.maxHealth}')
             
         attack = input('\nATTACK > ')
-          
-        # p1health = self.pokemon1.stats('maxHealth')
-        # # p1cp = self.pokemon1.stats('CP') 
-        # p1type = self.pokemon1.stats('Type')
-        # p1spCharge = 0
-        
-        # p2health = self.pokemon2.stats('maxHealth')
-        # # p2cp = self.pokemon2.stats('CP')
-        # p2type = self.pokemon2.stats('Type')
-        # p2spCharge = 0
     
         if attack == '':
           print('you did damage')

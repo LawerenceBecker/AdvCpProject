@@ -102,8 +102,8 @@ class Player(pygame.sprite.Sprite):
                             if self.moveCounter == self.encounterTimer:
                                 self.encounterTimer = random.randint(10, 25)
                                 self.moveCounter = 0
-                                Battle(self.pokemonBag[0], PygameData('Bulbasaur'))
-                                capture(self, PygameData("Charmander"))
+                                Battle(self.pokemonBag[0], PygameData('Bulbasaur', 4))
+                                capture(self, PygameData("Charmander",4))
                         
                         
 
@@ -131,8 +131,8 @@ class Player(pygame.sprite.Sprite):
                             if self.moveCounter == self.encounterTimer:
                                 self.encounterTimer = random.randint(10, 25)
                                 self.moveCounter = 0
-                                Battle(self.pokemonBag[0], PygameData('Bulbasaur'))
-                                capture(self, PygameData("Charmander"))
+                                Battle(self.pokemonBag[0], PygameData('Bulbasaur', 4))
+                                capture(self, PygameData("Charmander", 4))
     
     def input(self):
         keys = pygame.key.get_pressed()
@@ -167,7 +167,7 @@ class Player(pygame.sprite.Sprite):
                             
                             for index, pokemon in enumerate(self.pokemonBag):
                                 if choice == index+1:
-                                    print(pokemon.stats('Health'), pokemon.stats('MaxHealth'))
+                                    print(f'Health: {pokemon.stats("Health")} / {pokemon.stats("MaxHealth")} \nCP: {pokemon.stats("CP")}')
                                     break
                             
                             self.prevTick = pygame.time.get_ticks()
@@ -268,6 +268,6 @@ class Player(pygame.sprite.Sprite):
             self.rect.x, self.rect.y, tempBag = pickle.load(charData)
         
         for tempPoke in tempBag:
-            tempPokeData = PygameData(tempPoke.name)
+            tempPokeData = PygameData(tempPoke.name, tempPoke.level)
             tempPokeData.data = tempPoke
             self.pokemonBag.append(tempPokeData)
