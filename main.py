@@ -3,10 +3,7 @@ import sys
 
 from player import Player
 from pokemon import PygameData
-<<<<<<< HEAD
 from moveEffectiveness import effective
-=======
->>>>>>> a84fe5a55f07a19258fcb7323833061da05873c7
 from pickupItem import PickupItem
 from npc import NPC
 from item import Item
