@@ -79,7 +79,7 @@ def capture(player, pokemon):
         player.remove_item(item[0])
         m = random.randint(0, 255)
     
-        f = (pokemon.data.maxHealth * 255 * 4) / (pokemon.data.health+1 * ball)
+        f = (pokemon.data.maxHealth * 255 * 4) / (pokemon.data.health * ball)
         
         if f >= m:
             delayPrint('\nshake.')

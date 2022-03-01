@@ -63,16 +63,16 @@ class Battle:
             
             # should open menu here
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_x:
-              run = input("Would you like to run away? >> ")
-              if run == 'y' or run == 'yes':
-                print("You ran away successfully")
-                battle = False
-              else:
-                print("You didn't run away")
-                break
-
-        
-
+              choice = input("\n\nWhat would you like to do? \n1. Pokemon \n2. Bag \n3. Run \n4. Go Back \n> ")
+              if choice == '2':
+                  choice = input('\n1. Items \n2. Pokeballs \n> ')
+                  if choice == '1':
+                    pass
+                  elif choice == '2':
+                    bagLen = len(self.player.pokemonBag)
+                    capture(self.player, self.pokemon2)
+                    if len(self.player.pokemonBag) > bagLen:
+                        return
       
         if self.pokemon2.data.health <= 0:
             self.pokemon2.data.health = 0
