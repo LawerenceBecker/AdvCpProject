@@ -76,9 +76,6 @@ class Player(pygame.sprite.Sprite):
             if hasattr(sprite, 'job'):
                 if sprite.hitbox.colliderect(self.rect):
                     self.interactableSprite = sprite
-            if hasattr(sprite, 'item'):
-                if sprite.hitbox.colliderect(self.rect):
-                    self.interactableSprite = sprite
         
         if direction == "horizontal":
             for sprite in self.objectSprites:
@@ -220,33 +217,12 @@ class Player(pygame.sprite.Sprite):
 
             if keys[pygame.K_z]:
                 if self.interactableSprite:
-<<<<<<< HEAD
-<<<<<<< HEAD
                     if self.interactableSprite.job == 'shop':
                         self.interactableSprite.shop(self)
                     elif self.interactableSprite.job == 'pokecenter':
                         self.interactableSprite.pokeCenter(self)
                     elif self.interactableSprite.job == 'person':
                         self.interactableSprite.person(self)
-=======
-=======
->>>>>>> a84fe5a55f07a19258fcb7323833061da05873c7
-                    if hasattr(self.interactableSprite, 'job'):
-                        if self.interactableSprite.job == 'shop':
-                            self.interactableSprite.shop(self)
-                        elif self.interactableSprite.job == 'pokecenter':
-                            self.interactableSprite.pokeCenter(self)
-                        elif self.interactableSprite.job == 'person':
-                            self.interactableSprite.person(self)
-                    if hasattr(self.interactableSprite, 'item'):
-                        print(f'\nYou found a {self.interactableSprite.item.name}')
-                        self.add_item(self.interactableSprite.item, 1)
-                        self.interactableSprite.kill()
-                    
-<<<<<<< HEAD
->>>>>>> a84fe5a55f07a19258fcb7323833061da05873c7
-=======
->>>>>>> a84fe5a55f07a19258fcb7323833061da05873c7
                         
                     self.prevTick = pygame.time.get_ticks()
             
