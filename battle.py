@@ -82,10 +82,10 @@ class Battle:
                 print(f"Meter charge: {self.playerChargeMeter}")
 
               
-              if self.pokemon2.data.health <= 0:
-                self.pokemon2.data.health = 0
-                print('You won')
-                battle = False
+                if self.pokemon2.data.health <= 0:
+                  self.pokemon2.data.health = 0
+                  print('You won')
+                  battle = False
 
 
                   
@@ -133,19 +133,10 @@ class Battle:
 
 
 
-# Things we need:
+# To-do: 
 
-# Pokemon Stats:
-# - CP (Combat Power)
-# - Type
-# - Moves (normal and special)
-# -- Damage 
-# -- Type
- 
-# Battle system:
-# - Continous attacking
-# - Move delay  (based on damage)
-# - Special meter charging  (based on speed/move delay)
-# - Type advantages 
-# - Bag accessible at anytime 
-# - Differentiate wild encounters and trainer battles
+# usable special attack
+# basic UI for health and special meter
+# differentiate wild encounters and trainer battles
+# random pokemon each wild encounter
+# being able to switch out pokemon mid battle

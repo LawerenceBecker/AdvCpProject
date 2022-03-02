@@ -21,7 +21,7 @@ cpMult = {
 pokemon = {
   'Charmander': {
     'baseStats': {
-        'hp': 118,
+        'hp': 236,
         'attack': 116,
         'defense': 93,
         'type': 'Fire'
@@ -30,7 +30,7 @@ pokemon = {
   
   'Bulbasaur': {
     'baseStats': {
-        'hp': 128,
+        'hp': 256,
         'attack': 118,
         'defense': 111,
         'type': 'Grass'
@@ -39,7 +39,7 @@ pokemon = {
   
   'Squirtle': {
     'baseStats': {
-        'hp': 127,
+        'hp': 254,
         'attack': 94,
         'defense': 121,
         'type': 'Water'
@@ -48,7 +48,7 @@ pokemon = {
   
   'Pidgey': {
     'baseStats': {
-        'hp': 120,
+        'hp': 240,
         'attack': 85,
         'defense': 73,
         'type': 'Normal'
