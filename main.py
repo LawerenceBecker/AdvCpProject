@@ -44,6 +44,7 @@ class Game:
         self.player.add_item(Item('Poké Ball', 'Pokeballs'), 10)
         NPC([self.sprites, self.objectSprites], 1, 7, 'shop', [[Item('Potion','Medicine'), 100], [Item('Poké Ball', 'Pokeballs'), 100], [Item('Great Ball', 'Pokeballs'), 200], [Item('Ultra Ball', 'Pokeballs'), 300], [Item('Master Ball', 'Pokeballs'), 100]])
         NPC([self.sprites, self.objectSprites], 1, 9, 'pokecenter')
+        NPC([self.sprites, self.objectSprites], 9, 1, 'trainer', 'left', [PygameData('Bulbasaur', 4), PygameData('Pidgey', 3)])
 
         NPC([self.sprites, self.objectSprites], 4, 6, 'person', ['This is a test', 'Wow dialog', 'The guy by the grass is a special npc'])
         NPC([self.sprites, self.objectSprites], 4, 10, 'person', None, NPC.testSpecial)
