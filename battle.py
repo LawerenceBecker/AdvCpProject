@@ -77,7 +77,6 @@ class Battle:
         if self.pokemon2.data.health <= 0:
             self.pokemon2.data.health = 0
             print('You won')
-            capture(self.player, self.pokemon2)
             battle = False
         elif self.pokemon1.data.health <= 0:
           self.pokemon1.data.health = 0

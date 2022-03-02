@@ -54,7 +54,7 @@ moves = {'Quick': {
          'Water': {
            'Surf': {
              'Power': 65,
-             'Bars': 2
+             'Bars': 2,
              'MaxMeter': 50}
          },
          'Normal': {
