@@ -8,7 +8,7 @@ class PickupItem(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft = ((x*64)+16, (y*64)+16))
         self.rect.w = 48
         self.rect.h = 48
-        self.hitbox = self.rect.inflate(1, 1)
+        self.hitbox = self.rect.inflate(2,2)
 
         self.item = item
         self.tileType = ''

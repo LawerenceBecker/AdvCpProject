@@ -17,18 +17,21 @@ class NPC(pygame.sprite.Sprite):
         if job == 'shop': self.image.fill('blue')
         elif job == 'pokecenter': self.image.fill('red')
         elif job == 'person': self.image.fill('grey')
+        elif job == 'trainer': self.image.fill('white')
             
 
         self.rect = self.image.get_rect(topleft = (x*64,y*64))
-        self.hitbox = self.rect.inflate(1,1)
+        self.hitbox = self.rect.inflate(2,2)
         self.placement = 1
-
+        
         self.job = job
         self.tileType = ''
 
         self.shopInv = specialInfo
         self.dialogArray = specialInfo
-
+        self.facing = specialInfo
+        self.npcPokeBag = specialInteraction
+        
         self.specialInteraction = specialInteraction
 
     def person(self, player):
