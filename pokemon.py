@@ -49,8 +49,16 @@ class EntityData():
 
         self.pokemonType = pokemon[name]['baseStats']['type']
 
-        self.normalMove = Move('Fire', "Quick", 'Ember')
+        self.FireQuick = Move('Fire', "Quick", 'Ember')
+        self.GrassQuick = Move('Grass', 'Quick', 'Vine Whip')
+        self.NormalQuick = Move('Normal', 'Quick', 'Tackle')
+        self.WaterQuick = Move('Water', 'Quick', 'Water Gun')
 
+        self.FireSpecial = Special('Fire', 'Special', 'Fire Punch')
+        self.GrassSpecial = Special('Grass', 'Special', 'Solar Beam')
+        self.NormalSpecial =  Special('Normal', 'Special', 'Return')
+        self.WaterSpecial = Special('Water', 'Special', 'Surf')
+      
         self.maxHealth = self.statCalc(self.hpIV, 'hp')
         self.health = self.maxHealth
         
@@ -72,3 +80,11 @@ class Move():
         self.power = moves[typeMove][type][name]['Power']
         self.cooldown = moves[typeMove][type][name]['Cooldown']
         self.fillMeter = moves[typeMove][type][name]['FillMeter']
+
+class Special():
+    def __init__(self, type, typeMove, name):
+        self.moveName = name
+        self.moveType = type
+        self.power = moves[typeMove][type][name]['Power']
+        self.meterSize = moves[typeMove][type][name]['MeterSize']
+        self.bars = moves[typeMove][type][name]['Bars']

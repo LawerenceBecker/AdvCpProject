@@ -49,19 +49,19 @@ moves = {'Quick': {
            'Solar Beam': {
              'Power': 180,
              'Bars': 1,
-             'MaxMeter': 100}
+             'MeterSize': 100}
          },
          'Water': {
            'Surf': {
              'Power': 65,
              'Bars': 2,
-             'MaxMeter': 50}
+             'MeterSize': 50}
          },
          'Normal': {
            'Return': {
              'Power': 35,
              'Bars': 3,
-             'MaxMeter': 33}
+             'MeterSize': 33}
          }
         }
       }
