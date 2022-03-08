@@ -14,9 +14,11 @@ class Game:
     def __init__(self):
         self.screen = pygame.display.set_mode((1280,720))
         pygame.display.set_caption('Adv CP Pokemon Clone')
+        pygame.init()
         self.clock = pygame.time.Clock()
 
         self.sprites = CameraGroup()
+        self.uiSprites = pygame.sprite.Group()
         self.objectSprites = pygame.sprite.Group()
         self.routeAreas = pygame.sprite.Group()
 
@@ -33,13 +35,15 @@ class Game:
             self.screen.fill('#9edb64')
 
             self.sprites.custom_draw(self.player)
+            self.uiSprites.draw(self.screen)
+            self.uiSprites.update()
             self.player.update()
 
             pygame.display.update()
             self.clock.tick(60)
 
     def CreateMap(self, mapCSV):
-        self.player = Player([self.sprites], 6, 6, self.objectSprites, self.routeAreas)
+        self.player = Player([self.sprites], 6, 6, self.objectSprites, self.routeAreas, self.uiSprites)
         self.player.add_pokemon(PygameData('Charmander', 5), 'Test')
         self.player.add_pokemon(PygameData('Charmander', 5), 'Test2')
         PickupItem([self.sprites, self.objectSprites], 1, 1, Item('Potion', "Medicine"))
@@ -47,7 +51,7 @@ class Game:
         self.player.add_item(Item('Poké Ball', 'Pokeballs'), 10)
         NPC([self.sprites, self.objectSprites], 1, 7, 'shop', [[Item('Potion','Medicine'), 100], [Item('Poké Ball', 'Pokeballs'), 100], [Item('Great Ball', 'Pokeballs'), 200], [Item('Ultra Ball', 'Pokeballs'), 300], [Item('Master Ball', 'Pokeballs'), 100]])
         NPC([self.sprites, self.objectSprites], 1, 9, 'pokecenter')
-        NPC([self.sprites, self.objectSprites], 9, 1, 'trainer', 'left', [PygameData('Bulbasaur', 4), PygameData('Pidgey', 3)])
+        NPC([self.sprites, self.objectSprites], 9, 1, 'trainer', 'left', ['Test Trainer', PygameData('Bulbasaur', 4), PygameData('Pidgey', 3)])
 
         NPC([self.sprites, self.objectSprites], 4, 6, 'person', ['This is a test', 'Wow dialog', 'The guy by the grass is a special npc'])
         NPC([self.sprites, self.objectSprites], 4, 10, 'person', None, NPC.testSpecial)

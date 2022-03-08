@@ -19,12 +19,18 @@ from pokemon import PygameData
 from capture import *
 
 class Battle:
-  def __init__(self, player, pokemon2):
+  def __init__(self, player, pokemon2, trainerInfo=None):
     for pokemon in player.pokemonBag:
       if pokemon.data.health >= 1:   
         self.pokemon1 = pokemon
         break
-    self.pokemon2 = pokemon2
+    if trainerInfo:
+        self.trainerName = trainerInfo
+        self.trainerPokemon = pokemon2
+        self.pokemon2 = self.trainerPokemon[0]
+    else:
+        self.pokemon2 = pokemon2
+    
     self.player = player
     self.playerTicks = pygame.time.get_ticks()
     self.cpuTicks = pygame.time.get_ticks()
@@ -49,6 +55,14 @@ class Battle:
   def go(self):
       
     battle = True
+    if hasattr(self, 'trainerName'):
+        trainerBattle = True
+        print(f"\n{self.trainerName} has challenged you!")
+
+        print(f'They sent out {self.pokemon2.data.name}!')
+
+        input()
+    else: trainerBattle = False
     print(f'\nGo {self.pokemon1.data.nickName}!')
     input()
 
@@ -57,18 +71,15 @@ class Battle:
     
     
     while battle:
-
-        poke1quick = eval(f'self.pokemon1.data.{self.pokemon1.data.pokemonType}Quick')
-        poke2quick = eval(f'self.pokemon2.data.{self.pokemon2.data.pokemonType}Quick')
-
-        poke1special = eval(f'self.pokemon1.data.{self.pokemon1.data.pokemonType}Special')
-        poke2special = eval(f'self.pokemon2.data.{self.pokemon2.data.pokemonType}Special')
-
-
-
       
         event_list = pygame.event.get()
         for event in event_list:
+            poke1quick = eval(f'self.pokemon1.data.{self.pokemon1.data.pokemonType}Quick')
+            poke2quick = eval(f'self.pokemon2.data.{self.pokemon2.data.pokemonType}Quick')
+    
+            poke1special = eval(f'self.pokemon1.data.{self.pokemon1.data.pokemonType}Special')
+            poke2special = eval(f'self.pokemon2.data.{self.pokemon2.data.pokemonType}Special')
+            
             if event.type == pygame.KEYDOWN and event.key == pygame.K_z and pygame.time.get_ticks() - self.playerTicks >= poke1quick.cooldown:
               
                 self.playerTicks = pygame.time.get_ticks()
@@ -76,8 +87,10 @@ class Battle:
                 print('you did damage')
 
               
-                
-                damage = self.damage(poke1quick, self.pokemon1, self.pokemon2)
+                if trainerBattle:
+                    damage = self.damage(poke1quick, self.pokemon1, self.pokemon2, 1.3)
+                else:
+                    damage = self.damage(poke1quick, self.pokemon1, self.pokemon2)
                 self.pokemon2.data.health -= damage
 
                 if self.playerChargeMeter + poke1quick.fillMeter > poke1special.meterSize:
@@ -90,8 +103,24 @@ class Battle:
               
                 if self.pokemon2.data.health <= 0:
                   self.pokemon2.data.health = 0
-                  print('You won')
-                  battle = False
+                  if trainerBattle:
+                      for pokemon in self.trainerPokemon:
+                          if pokemon.data.health >= 1:
+                              win = False
+                              print(f'\n{self.pokemon2.data.name} fainted!')
+                              print(f'\n{self.trainerName} sends out {pokemon.data.name}')
+                              self.pokemon2 = pokemon
+                              self.cpuTicks = pygame.time.get_ticks()
+                              self.cpuChargeMeter = 0
+                              input()
+                          else:
+                              win = True
+                      if win:
+                          print('You Won')
+                          battle=False
+                  else:
+                    print('You won')
+                    battle = False
 
 
                   
@@ -137,8 +166,12 @@ class Battle:
           self.cpuTicks = pygame.time.get_ticks()
 
           print('cpu did damage')
-              
-          damage = self.damage(poke2quick, self.pokemon2, self.pokemon1)
+
+          if trainerBattle:
+          
+              damage = self.damage(poke2quick, self.pokemon2, self.pokemon1, 1.3)
+          else:
+              damage = self.damage(poke2quick, self.pokemon2, self.pokemon1)
 
           self.pokemon1.data.health -= damage
 

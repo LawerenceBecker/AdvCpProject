@@ -5,9 +5,10 @@ from random import *
 from pokemon import PygameData
 from capture import *
 from battle import Battle
+from route import RouteLabel
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, groups, x, y, objectSprites, routeAreas):
+    def __init__(self, groups, x, y, objectSprites, routeAreas, uiSprites):
         super().__init__(groups)
 
         self.moveUp = pygame.image.load("Character/BoxUp.png").convert_alpha()
@@ -31,6 +32,7 @@ class Player(pygame.sprite.Sprite):
         self.encounterTimer = randint(10, 25)
 
         self.objectSprites = objectSprites
+        self.uiSprites = uiSprites
         self.routeAreas = routeAreas
         self.currentRoute = None
         self.interactableSprite = None
@@ -45,9 +47,10 @@ class Player(pygame.sprite.Sprite):
         for route in self.routeAreas:
             if self.rect.colliderect(route.rect):
                 if route.entered == False:
-                    print(route.name)
                     self.currentRoute = route
                     route.entered = True
+                    RouteLabel(self.uiSprites, route.name)
+                    
             else:
                 route.entered = False
 
@@ -72,16 +75,27 @@ class Player(pygame.sprite.Sprite):
                 if sprite.job == 'trainer':
                     if sprite.facing == 'left':
                         if sprite.rect.y == self.rect.y and self.rect.x >= sprite.rect.x - (5*64) and self.rect.x <= sprite.rect.x:
-                            print(sprite.npcPokeBag)
+                            if sprite.active == True:
+                                Battle(self, sprite.npcPokeBag[1:], sprite.npcPokeBag[0])
+                                sprite.active = False
                     if sprite.facing == 'right':
                         if sprite.rect.y == self.rect.y and self.rect.x <= sprite.rect.x + (5*64) and self.rect.x >= sprite.rect.x:
-                            print(sprite.npcPokeBag)
+                            if sprite.active == True:
+                                Battle(self, sprite.npcPokeBag[1:], sprite.npcPokeBag[0])
+                                sprite.active = False
+                                
                     if sprite.facing == 'up':
                         if sprite.rect.x == self.rect.x and self.rect.y >= sprite.rect.y - (5*64) and self.rect.y <= sprite.rect.y:
-                            print(sprite.npcPokeBag)
+                            if sprite.active == True:
+                                Battle(self, sprite.npcPokeBag[1:], sprite.npcPokeBag[0])
+                                sprite.active = False
+                                
                     if sprite.facing == 'down':
                         if sprite.rect.x == self.rect.x and self.rect.y <= sprite.rect.y + (5*64) and self.rect.y >= sprite.rect.y:
-                            print(sprite.npcPokeBag)
+                            if sprite.active == True:
+                                Battle(self, sprite.npcPokeBag[1:], sprite.npcPokeBag[0])
+                                sprite.active = False
+                                
                         
             if hasattr(sprite, 'item'):
                 if sprite.hitbox.colliderect(self.rect):

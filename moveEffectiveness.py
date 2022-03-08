@@ -13,7 +13,7 @@ def effective(attPokeType, defPokeType):
     elif efficacy == .39:
       return "Defending pokémon is immune!", .39
     else:
-      return "No effectivity", 0
+      return "No effectivity", 1
   except:
     return "Invalid types"
 

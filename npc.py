@@ -31,6 +31,7 @@ class NPC(pygame.sprite.Sprite):
         self.dialogArray = specialInfo
         self.facing = specialInfo
         self.npcPokeBag = specialInteraction
+        self.active = True
         
         self.specialInteraction = specialInteraction
 
