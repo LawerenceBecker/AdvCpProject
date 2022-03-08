@@ -19,8 +19,11 @@ from pokemon import PygameData
 from capture import *
 
 class Battle:
-  def __init__(self, player, pokemon1, pokemon2):
-    self.pokemon1 = pokemon1
+  def __init__(self, player, pokemon2):
+    for pokemon in player.pokemonBag:
+      if pokemon.data.health >= 1:   
+        self.pokemon1 = pokemon
+        break
     self.pokemon2 = pokemon2
     self.player = player
     self.playerTicks = pygame.time.get_ticks()
@@ -46,6 +49,9 @@ class Battle:
   def go(self):
       
     battle = True
+    print(f'\nGo {self.pokemon1.data.nickName}!')
+    input()
+
     print("BATTLE (z to attack)")
 
     
@@ -93,7 +99,30 @@ class Battle:
             # should open menu here
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_x:
               choice = input("\n\nWhat would you like to do? \n1. Pokemon \n2. Bag \n3. Run \n4. Go Back \n> ")
-              if choice == '2':
+
+              if choice == '1':
+                  print('\n')
+                  for index, pokemon in enumerate(self.player.pokemonBag):
+                    print(f'{index+1}. {pokemon.data.nickName} {pokemon.data.health} / {pokemon.data.maxHealth}')
+                  print(f'{index+2}. Return')
+                  choice = input('> ')
+                  if choice == str(index+2):
+                    pass
+                  for index, pokemon in enumerate(self.player.pokemonBag):
+                    if choice == str(index+1):
+                      if pokemon.data.health >= 1:
+                        print(f'\nCome back {self.pokemon1.data.nickName}!')
+
+                        print(f'\nGo {pokemon.data.nickName}!')
+
+                        self.pokemon1 = pokemon
+
+                        input()
+                        break
+                      else:
+                        print('You can\'t use that pokemon')
+
+              elif choice == '2':
                   choice = input('\n1. Items \n2. Pokeballs \n> ')
                   if choice == '1':
                     pass
@@ -121,7 +150,34 @@ class Battle:
           
           if self.pokemon1.data.health <= 0:
             self.pokemon1.data.health = 0
-            print('You lose')
+
+            print(f'{self.pokemon1.data.name} fainted!')
+            input()
+
+            for pokemon in self.player.pokemonBag:
+              if pokemon.data.health >= 1:
+                lose = False
+
+                print('\n')
+                for index, pokemon in enumerate(self.player.pokemonBag):
+                  print(f'{index+1}. {pokemon.data.nickName} {pokemon.data.health} / {pokemon.data.maxHealth}')
+                choice = input('> ')
+                for index, pokemon in enumerate(self.player.pokemonBag):
+                  if choice == str(index+1):
+                    if pokemon.data.health >= 1:
+                      print(f'\nGo {pokemon.data.nickName}!')
+
+                      self.pokemon1 = pokemon
+
+                      input()
+                      break
+                    else:
+                      print('You can\'t use that pokemon')
+              else: lose = True
+            if lose == True:
+              print('All your pokemon have fainted!')
+              return
+
           
           print(f"Cpu charge: {self.cpuChargeMeter}")
 

@@ -142,7 +142,7 @@ class Player(pygame.sprite.Sprite):
                                 self.encounterTimer = random.randint(10, 25)
                                 self.moveCounter = 0
                                 randomPoke = choice(self.currentRoute.pokemonTable)
-                                Battle(self, self.pokemonBag[0], PygameData(randomPoke[0], randomPoke[1]))
+                                Battle(self, PygameData(randomPoke[0], randomPoke[1]))
                         
                         
 
@@ -171,7 +171,7 @@ class Player(pygame.sprite.Sprite):
                                 self.encounterTimer = random.randint(10, 25)
                                 self.moveCounter = 0
                                 randomPoke = choice(self.currentRoute.pokemonTable)
-                                Battle(self, self.pokemonBag[0], PygameData(randomPoke[0], randomPoke[1]))
+                                Battle(self, PygameData(randomPoke[0], randomPoke[1]))
                         
             if hasattr(sprite, 'item'):
                 if sprite.hitbox.colliderect(self.rect):
