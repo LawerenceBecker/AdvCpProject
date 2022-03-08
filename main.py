@@ -8,6 +8,7 @@ from npc import NPC
 from item import Item
 from tile import Tile
 from csv import reader
+from route import Route
 
 class Game:
     def __init__(self):
@@ -17,6 +18,7 @@ class Game:
 
         self.sprites = CameraGroup()
         self.objectSprites = pygame.sprite.Group()
+        self.routeAreas = pygame.sprite.Group()
 
         self.CreateMap('Map/PokemonCloneTestMap.csv')
 
@@ -37,7 +39,7 @@ class Game:
             self.clock.tick(60)
 
     def CreateMap(self, mapCSV):
-        self.player = Player([self.sprites], 6, 6, self.objectSprites)
+        self.player = Player([self.sprites], 6, 6, self.objectSprites, self.routeAreas)
         self.player.add_pokemon(PygameData('Charmander', 5), 'Test')
         PickupItem([self.sprites, self.objectSprites], 1, 1, Item('Potion', "Medicine"))
         self.player.add_item(Item('Potion', 'Medicine'), 3)
@@ -48,6 +50,8 @@ class Game:
 
         NPC([self.sprites, self.objectSprites], 4, 6, 'person', ['This is a test', 'Wow dialog', 'The guy by the grass is a special npc'])
         NPC([self.sprites, self.objectSprites], 4, 10, 'person', None, NPC.testSpecial)
+
+        Route('Test', self.routeAreas)
         
         terrainLayout = []
         with open(mapCSV) as levelMap:

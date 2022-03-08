@@ -7,7 +7,7 @@ from capture import *
 from battle import Battle
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, groups, x, y, objectSprites):
+    def __init__(self, groups, x, y, objectSprites, routeAreas):
         super().__init__(groups)
 
         self.moveUp = pygame.image.load("Character/BoxUp.png").convert_alpha()
@@ -31,6 +31,8 @@ class Player(pygame.sprite.Sprite):
         self.encounterTimer = randint(10, 25)
 
         self.objectSprites = objectSprites
+        self.routeAreas = routeAreas
+        self.currentRoute = None
         self.interactableSprite = None
 
         self.pokemonBag = []
@@ -39,6 +41,15 @@ class Player(pygame.sprite.Sprite):
 
     def update(self):
         self.input()
+
+        for route in self.routeAreas:
+            if self.rect.colliderect(route.rect):
+                if route.entered == False:
+                    print(route.name)
+                    self.currentRoute = route
+                    route.entered = True
+            else:
+                route.entered = False
 
         self.rect.x += self.direction.x * 64
         self.collision("horizontal")
@@ -130,7 +141,8 @@ class Player(pygame.sprite.Sprite):
                             if self.moveCounter == self.encounterTimer:
                                 self.encounterTimer = random.randint(10, 25)
                                 self.moveCounter = 0
-                                Battle(self, self.pokemonBag[0], PygameData('Bulbasaur', 4))
+                                randomPoke = choice(self.currentRoute.pokemonTable)
+                                Battle(self, self.pokemonBag[0], PygameData(randomPoke[0], randomPoke[1]))
                         
                         
 
@@ -158,7 +170,8 @@ class Player(pygame.sprite.Sprite):
                             if self.moveCounter == self.encounterTimer:
                                 self.encounterTimer = random.randint(10, 25)
                                 self.moveCounter = 0
-                                Battle(self, self.pokemonBag[0], PygameData('Bulbasaur', 4))
+                                randomPoke = choice(self.currentRoute.pokemonTable)
+                                Battle(self, self.pokemonBag[0], PygameData(randomPoke[0], randomPoke[1]))
                         
             if hasattr(sprite, 'item'):
                 if sprite.hitbox.colliderect(self.rect):
