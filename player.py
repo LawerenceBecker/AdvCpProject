@@ -224,7 +224,7 @@ class Player(pygame.sprite.Sprite):
                             
                             for index, pokemon in enumerate(self.pokemonBag):
                                 if choice == index+1:
-                                    print(f'Health: {pokemon.stats("Health")} / {pokemon.stats("MaxHealth")} \nCP: {pokemon.stats("CP")}')
+                                    print(f'Health: {pokemon.stats("Health")} / {pokemon.stats("MaxHealth")} \nLevel: {pokemon.data.level} \nCP: {pokemon.stats("CP")} \nEXP: {pokemon.data.exp} / {pokemon.data.expNeeded()[0]}: {pokemon.data.expNeeded()[1]} needed')
                                     break
                             
                             self.prevTick = pygame.time.get_ticks()

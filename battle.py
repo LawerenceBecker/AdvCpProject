@@ -104,6 +104,9 @@ class Battle:
                 if self.pokemon2.data.health <= 0:
                   self.pokemon2.data.health = 0
                   if trainerBattle:
+                      print(f'{self.pokemon1.data.nickName} gained {self.pokemon1.data.gainExperience(self.pokemon2, 1.5)} experience points')
+                      self.pokemon1.data.exp += self.pokemon1.data.gainExperience(self.pokemon2)
+                      self.pokemon1.data.checkLevelUp()
                       for pokemon in self.trainerPokemon:
                           if pokemon.data.health >= 1:
                               win = False
@@ -119,6 +122,10 @@ class Battle:
                           print('You Won')
                           battle=False
                   else:
+                    print(f'{self.pokemon1.data.nickName} gained {self.pokemon1.data.gainExperience(self.pokemon2)} experience points')
+                    self.pokemon1.data.exp += self.pokemon1.data.gainExperience(self.pokemon2)
+                    self.pokemon1.data.checkLevelUp()
+                    
                     print('You won')
                     battle = False
 

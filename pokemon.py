@@ -2,7 +2,7 @@ import pygame
 import random
 import math
 from moveDatabase import moves
-from pokemonData import pokemon, cpMult
+from pokemonData import pokemon, cpMult, expTotal, expYield
 
 class PygameData(pygame.sprite.Sprite):
     def __init__(self, name, level):
@@ -44,8 +44,7 @@ class EntityData():
         self.defenseIV = random.randint(1,16)
 
         self.level = level
-        self.exp = 0
-        self.totalExp = 0
+        self.exp = expTotal[level]
 
         self.pokemonType = pokemon[name]['baseStats']['type']
 
@@ -67,6 +66,21 @@ class EntityData():
 
         self.cp = self.cpCalc()
 
+    def expNeeded(self):
+        return expTotal[self.level+1], expTotal[self.level+1] - self.exp
+
+    def gainExperience(self, pokemon2, a=1):
+        return math.floor((a * expYield[pokemon2.data.name] * pokemon2.data.level) / 7)
+
+    def checkLevelUp(self):
+        if self.exp >= expTotal[self.level+1]:
+            print(f'{self.nickName} gained a level')
+            self.level += 1
+            self.attack = self.statCalc(self.attackIV, 'attack')
+            self.defence = self.statCalc(self.defenseIV, 'defense')
+            self.maxHealth = self.statCalc(self.hpIV, 'hp')
+            self.cp = self.cpCalc()
+            
     def cpCalc(self):
         return math.ceil((math.sqrt(self.maxHealth) * self.attack * math.sqrt(self.defense))/10)
         
