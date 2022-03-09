@@ -207,6 +207,7 @@ class Battle:
                     else:
                       print('You can\'t use that pokemon')
               else: lose = True
+                  
             if lose == True:
               print('All your pokemon have fainted!')
               return
