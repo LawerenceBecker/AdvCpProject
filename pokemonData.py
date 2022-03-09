@@ -21,7 +21,9 @@ cpMult = {
 }
 
 expYield = {
+    'Charmander': 65,
     'Bulbasaur': 64,
+    'Squirtle': 64,
     'Pidgey': 55,
 }
 
