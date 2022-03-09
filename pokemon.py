@@ -88,3 +88,4 @@ class Special():
         self.power = moves[typeMove][type][name]['Power']
         self.meterSize = moves[typeMove][type][name]['MeterSize']
         self.bars = moves[typeMove][type][name]['Bars']
+        self.cooldown = moves[typeMove][type][name]['Cooldown']

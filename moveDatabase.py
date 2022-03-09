@@ -43,25 +43,29 @@ moves = {'Quick': {
            'Fire Punch': {
              'Power': 55,
              'Bars': 3,
-             'MeterSize': 33}
+             'MeterSize': 33,
+             'Cooldown': 2200}
          },
          'Grass': {
            'Solar Beam': {
              'Power': 180,
              'Bars': 1,
-             'MeterSize': 100}
+             'MeterSize': 100,
+             'Cooldown': 4900}
          },
          'Water': {
            'Surf': {
              'Power': 65,
              'Bars': 2,
-             'MeterSize': 50}
+             'MeterSize': 50,
+             'Cooldown': 1700}
          },
          'Normal': {
            'Return': {
              'Power': 35,
              'Bars': 3,
-             'MeterSize': 33}
+             'MeterSize': 33,
+             'Cooldown': 700}
          }
         }
       }
