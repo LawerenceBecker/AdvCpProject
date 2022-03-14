@@ -44,7 +44,7 @@ class EntityData():
         self.defenseIV = random.randint(1,16)
 
         self.level = level
-        self.exp = expTotal[level] + 1000
+        self.exp = expTotal[level]
 
         self.pokemonType = pokemon[name]['baseStats']['type']
 

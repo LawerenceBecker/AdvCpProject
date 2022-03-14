@@ -461,7 +461,6 @@ class LevelBar(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft = (x,y))
 
         amount = (pokemon.data.exp - pokemon.data.expNeeded()[2]) / (pokemon.data.expNeeded()[0] - pokemon.data.expNeeded()[2])
-        print((pokemon.data.exp - pokemon.data.expNeeded()[2]) / (pokemon.data.expNeeded()[0] - pokemon.data.expNeeded()[2]))
         
         self.fillBar = pygame.Surface((64*amount, 8))
         self.fillBar.fill('light blue')
