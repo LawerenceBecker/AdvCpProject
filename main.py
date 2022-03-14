@@ -60,11 +60,17 @@ class Game:
 
     def CreateMap(self, mapCSV):
         self.player = Player([self.sprites], 6, 6, self.objectSprites, self.routeAreas, self.uiSprites)
-        self.player.add_pokemon(PygameData('Charmander', 15), 'Test')
-        self.player.add_pokemon(PygameData('Charmander', 5), 'Test2')
+        
+        choice = input('Load previous data?(y/n) \n> ')
+        if choice.lower() == 'y':
+            self.player.load_char()
+        else:
+            self.player.add_pokemon(PygameData('Charmander', 15), 'Test')
+            self.player.add_pokemon(PygameData('Charmander', 5), 'Test2')
+            self.player.add_item(Item('Potion', 'Medicine'), 3)
+            self.player.add_item(Item('Poké Ball', 'Pokeballs'), 10)
+        
         PickupItem([self.sprites, self.objectSprites], 1, 1, Item('Potion', "Medicine"))
-        self.player.add_item(Item('Potion', 'Medicine'), 3)
-        self.player.add_item(Item('Poké Ball', 'Pokeballs'), 10)
         NPC([self.sprites, self.objectSprites], 1, 7, 'shop', [[Item('Potion','Medicine'), 100], [Item('Poké Ball', 'Pokeballs'), 100], [Item('Great Ball', 'Pokeballs'), 200], [Item('Ultra Ball', 'Pokeballs'), 300], [Item('Master Ball', 'Pokeballs'), 100]])
         NPC([self.sprites, self.objectSprites], 1, 9, 'pokecenter')
         NPC([self.sprites, self.objectSprites], 9, 1, 'trainer', 'left', ['Test Trainer', PygameData('Bulbasaur', 4), PygameData('Pidgey', 3)])

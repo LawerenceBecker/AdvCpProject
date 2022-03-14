@@ -42,6 +42,8 @@ class Player(pygame.sprite.Sprite):
         self.bag = {'Medicine': [], 'Pokeballs': []}
         self.money = 300
 
+        self.active = True
+
     def update(self):
         self.input()
 
@@ -212,8 +214,10 @@ class Player(pygame.sprite.Sprite):
                         for elem in self.uiSprites:
                             if isinstance(elem, InventoryOptions):
                                 elem.kill()
+                        self.active = True
                         return
                 InventoryMenu(self.uiSprites, self)
+                self.active = False
 
             elif keys[pygame.K_ESCAPE]:
                 print('Reset(Debug)')
@@ -237,6 +241,9 @@ class Player(pygame.sprite.Sprite):
                             self.interactableSprite.pokeCenter(self)
                         elif self.interactableSprite.job == 'person':
                             self.interactableSprite.person(self)
+                        elif self.interactableSprite.job == 'trainer' and self.interactableSprite.active == True:
+                            Battle(self, self.interactableSprite.npcPokeBag[1:], self.interactableSprite.npcPokeBag[0])
+                            self.interactableSprite.active = False
                     if hasattr(self.interactableSprite, 'item'):
                         print(f'\nYou found a {self.interactableSprite.item.name}')
                         self.add_item(self.interactableSprite.item, 1)
@@ -244,28 +251,28 @@ class Player(pygame.sprite.Sprite):
                         
                     self.prevTick = pygame.time.get_ticks()
             
-            if keys[pygame.K_w] or keys[pygame.K_UP]:
+            if (keys[pygame.K_w] or keys[pygame.K_UP]) and self.active == True:
                 self.direction.y = -1
                 self.image = self.moveUp
                 self.prevTick = pygame.time.get_ticks()
                 self.facing = 'UP'
                 self.interactingAB = True
 
-            elif keys[pygame.K_s] or keys[pygame.K_DOWN]:
+            elif (keys[pygame.K_s] or keys[pygame.K_DOWN]) and self.active == True:
                 self.direction.y = 1
                 self.image = self.moveDown
                 self.prevTick = pygame.time.get_ticks()
                 self.facing = 'DOWN'
                 self.interactingAB = True
                 
-            elif keys[pygame.K_a] or keys[pygame.K_LEFT]:
+            elif (keys[pygame.K_a] or keys[pygame.K_LEFT]) and self.active == True:
                 self.direction.x = -1
                 self.image = self.moveLeft
                 self.prevTick = pygame.time.get_ticks()
                 self.facing = 'LEFT'
                 self.interactingRL = True
 
-            elif keys[pygame.K_d] or keys[pygame.K_RIGHT]:
+            elif (keys[pygame.K_d] or keys[pygame.K_RIGHT]) and self.active == True:
                 self.direction.x = 1
                 self.image = self.moveRight
                 self.prevTick = pygame.time.get_ticks()
