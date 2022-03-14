@@ -209,14 +209,14 @@ class Player(pygame.sprite.Sprite):
             if keys[pygame.K_TAB]:
                 self.prevTick = pygame.time.get_ticks()
                 for elem in self.uiSprites:
-                    if isinstance(elem, InventoryMenu):
+                    if isinstance(elem, Menu) and elem.job == 'Inv':
                         elem.kill()
                         for elem in self.uiSprites:
-                            if isinstance(elem, InventoryOptions):
+                            if isinstance(elem, Options)and elem.job == 'InvOpt':
                                 elem.kill()
                         self.active = True
                         return
-                InventoryMenu(self.uiSprites, self)
+                Menu(self.uiSprites, self, 'Inv')
                 self.active = False
 
             elif keys[pygame.K_ESCAPE]:
@@ -299,36 +299,75 @@ class Player(pygame.sprite.Sprite):
             tempPokeData.data = tempPoke
             self.pokemonBag.append(tempPokeData)
 
-class InventoryMenu(pygame.sprite.Sprite):
-    def __init__(self, group, player):
+class Menu(pygame.sprite.Sprite):
+    def __init__(self, group, player, job):
         super().__init__(group)
 
-        self.image = pygame.Surface((200, 260))
-        self.image.fill('light grey')
-        self.rect = self.image.get_rect(topleft= (pygame.display.get_surface().get_width()-200,150))
         self.player = player
-        
-        InventoryOptions(group, 'Pokemon', self.rect.x+20, self.rect.y+20, self.player)
-        InventoryOptions(group, 'Bag', self.rect.x+20, self.rect.y+80, self.player)
-        InventoryOptions(group, 'Save', self.rect.x+20, self.rect.y+140, self.player)
-        InventoryOptions(group, 'End', self.rect.x+20, self.rect.y+200, self.player)
-            
-                        
-
-class InventoryOptions(pygame.sprite.Sprite):
-    def __init__(self, group, text,x, y, player):
-        super().__init__(group)
-
-        self.image = pygame.Surface((160, 40))
-        self.rect = self.image.get_rect(topleft = (x, y))
-        self.player = player
-        self.group = group
-
-        self.text = text
+        self.job = job
 
         self.font = pygame.font.Font("Data/DisposableDroidBB.ttf", 24)
-        self.text_surface = self.font.render(self.text, True, (155,155,155))
-        self.image.blit(self.text_surface, [10,10])
+
+        if job == 'Inv':
+            self.image = pygame.Surface((200, 260))
+            self.image.fill('light grey')
+            self.rect = self.image.get_rect(topleft= (pygame.display.get_surface().get_width()-200,150))
+            Options(group, 'Pokemon', self.rect.x+20, self.rect.y+20, self.player, 'InvOpt')
+            Options(group, 'Bag', self.rect.x+20, self.rect.y+80, self.player, 'InvOpt')
+            Options(group, 'Save', self.rect.x+20, self.rect.y+140, self.player, 'InvOpt')
+            Options(group, 'End', self.rect.x+20, self.rect.y+200, self.player, 'InvOpt')
+            
+        elif job == 'ExitComf':
+            self.image = pygame.Surface((200, 100))
+            self.image.fill('light grey')
+            self.rect = self.image.get_rect(topleft= ((pygame.display.get_surface().get_width()/2)-100,(pygame.display.get_surface().get_height()/2)-100))
+
+            text = self.font.render('Are you sure?', True, (0,0,0))
+            self.image.blit(text, [100-(text.get_width()/2), 10])
+
+            Options(group, 'Yes', self.rect.x+32, self.rect.y+45, self.player, 'ExitOpt')
+            Options(group, 'No', self.rect.x+107, self.rect.y+45, self.player, 'ExitOpt')
+            
+        elif job == 'PokeInfo':
+            self.image = pygame.Surface((200, 180))
+            self.image.fill('dark grey')
+            self.rect = self.image.get_rect(topleft= (pygame.display.get_surface().get_width()-200,pygame.display.get_surface().get_height()-200))
+            
+            Options(group, 'Summary', self.rect.x+20, self.rect.y+20, self.player, 'InfoOpt')
+            Options(group, 'Swap', self.rect.x+20, self.rect.y+70, self.player, 'InfoOpt')
+            Options(group, 'Cancel', self.rect.x+20, self.rect.y+120, self.player, 'InfoOpt')
+            
+
+class Options(pygame.sprite.Sprite):
+    def __init__(self, group, text,x, y, player, job):
+        super().__init__(group)
+
+        self.player = player
+        self.group = group
+        self.job = job
+        self.active = True
+
+        self.text = text
+        self.font = pygame.font.Font("Data/DisposableDroidBB.ttf", 24)
+    
+        if job == 'InvOpt':
+            self.image = pygame.Surface((160, 40))
+            self.rect = self.image.get_rect(topleft = (x, y))
+            
+            self.text_surface = self.font.render(self.text, True, (155,155,155))
+            self.image.blit(self.text_surface, [10,10])
+        elif job == 'ExitOpt':
+            self.image = pygame.Surface((60, 40))
+            self.rect = self.image.get_rect(topleft = (x, y))
+            
+            self.text_surface = self.font.render(self.text, True, (155,155,155))
+            self.image.blit(self.text_surface, [0,0])
+        elif job == 'InfoOpt':
+            self.image = pygame.Surface((160, 40))
+            self.rect = self.image.get_rect(topleft = (x, y))
+            
+            self.text_surface = self.font.render(self.text, True, (155,155,155))
+            self.image.blit(self.text_surface, [10,10])
 
     def update(self):
 
@@ -344,52 +383,77 @@ class InventoryOptions(pygame.sprite.Sprite):
         
 
     def on_click(self):
-        if self.text == 'Pokemon':
-            PokemonIndetifier(self.group, self.player)
-            
 
-        elif self.text == 'Bag':
-            for index, pocket in enumerate(self.player.bag):
-                print(f'{index+1}. {pocket}')
-            print(f'{index+2}. End')
-            choice = int(input('> '))
-            
-            if choice == index+2:
-                return
-            for index, pocket in enumerate(self.player.bag):
-                if choice == index+1:
-                    des = pocket  
-            
-            if len(self.player.bag[des]) != 0 and des != None:
-                print(f'\n{des}:')
-                for index, item in enumerate(self.player.bag[des]):
-                    print(f'{index+1}. {item[0].name} x{item[1]}')
-                print(f'{index+2}. End')
+        print(self.job)
+
+        if self.job == 'InvOpt':
+            if self.text == 'Pokemon':
+                for elem in self.group:
+                    if hasattr(elem, 'job') and elem.job == 'InvOpt':
+                        elem.active = False
+                PokemonIndetifier(self.group, self.player)
                 
+            elif self.text == 'Bag':
+                for index, pocket in enumerate(self.player.bag):
+                    print(f'{index+1}. {pocket}')
+                print(f'{index+2}. End')
                 choice = int(input('> '))
-
+                
                 if choice == index+2:
                     return
+                for index, pocket in enumerate(self.player.bag):
+                    if choice == index+1:
+                        des = pocket  
                 
-                for index, item in enumerate(self.player.bag[des]):
-                    if index+1 == choice:
-                        item[0].find_use(self)
+                if len(self.player.bag[des]) != 0 and des != None:
+                    print(f'\n{des}:')
+                    for index, item in enumerate(self.player.bag[des]):
+                        print(f'{index+1}. {item[0].name} x{item[1]}')
+                    print(f'{index+2}. End')
+                    
+                    choice = int(input('> '))
+    
+                    if choice == index+2:
                         return
-            else:
-                print('You have no items in that pocket')
-            
-        elif self.text == 'Save':
-            print('\nSaving... \n...')
-            self.player.save_char()
-            print('Done Saving')
+                    
+                    for index, item in enumerate(self.player.bag[des]):
+                        if index+1 == choice:
+                            item[0].find_use(self)
+                            return
+                else:
+                    print('You have no items in that pocket')
+                
+            elif self.text == 'Save':
+                print('\nSaving... \n...')
+                self.player.save_char()
+                print('Done Saving')
+    
+            elif self.text == 'End':
+                Menu(self.group, self.job, 'ExitComf')
 
-        elif self.text == 'End':
-            choice = input('Are you sure?(y/n) \n> ')
-            if choice.lower() == 'y' or choice.lower() == 'yes':
+        elif self.job == 'ExitOpt':
+            if self.text == 'Yes':
                 pygame.QUIT
                 sys.exit()
-            else:
-                return
+            elif self.text == 'No':
+                for elem in self.group:
+                    if isinstance(elem, Menu) and elem.job == 'ExitComf':
+                        elem.kill()
+                    if isinstance(elem, Options) and elem.job == 'ExitOpt':
+                        elem.kill()
+
+        elif self.job == 'InfoOpt':
+            if self.text == 'Cancel':
+                for elem in self.group:
+                    if hasattr(elem, 'inUse'): 
+                        elem.inUse = False
+                        elem.active = True
+    
+                    elif isinstance(elem, Menu) and elem.job == 'PokeInfo': elem.kill()
+                    elif isinstance(elem, Options) and elem.job == 'InfoOpt': elem.kill()
+
+            elif self.text == 'Summary':
+                print(f'Health: {self.player.stats("Health")} / {self.player.stats("MaxHealth")} \nLevel: {self.player.data.level} \nCP: {self.player.stats("CP")} \nEXP: {self.player.data.exp} / {self.player.data.expNeeded()[0]}: {self.player.data.expNeeded()[1]} needed')
 
 class PokemonIndetifier(pygame.sprite.Sprite):
     def __init__(self, group, player):
@@ -420,7 +484,10 @@ class PokemonOptions(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft= (40, 120+(120*posIndex)))
         self.posIndex = posIndex
         self.parent = parent
-
+        self.group = group
+        self.inUse = False
+        self.active = True
+        
         self.pokemon = pokemon
         self.font = pygame.font.Font("Data/DisposableDroidBB.ttf", 64)
         self.smallFont = pygame.font.Font("Data/DisposableDroidBB.ttf", 48)
@@ -443,15 +510,27 @@ class PokemonOptions(pygame.sprite.Sprite):
         
 
     def update(self):
+        for elem in self.group:
+            if hasattr(elem, 'inUse') and elem.inUse == True:
+                return
+                
         if self.rect.collidepoint(pygame.mouse.get_pos()):
+            self.image.fill('dark grey')
+        elif self.inUse == True:
             self.image.fill('dark grey')
         else:
             self.image.fill('grey')
 
         self.fillPokeData()
 
-    def on_click(self):
-        print(f'Health: {self.pokemon.stats("Health")} / {self.pokemon.stats("MaxHealth")} \nLevel: {self.pokemon.data.level} \nCP: {self.pokemon.stats("CP")} \nEXP: {self.pokemon.data.exp} / {self.pokemon.data.expNeeded()[0]}: {self.pokemon.data.expNeeded()[1]} needed')
+    def on_click(self): 
+        self.inUse = True
+        for elem in self.group:
+            if isinstance(elem, PokemonOptions):
+                self.active = False
+            elif isinstance(elem, Menu) and elem.job == 'PokeInfo':
+                return
+        Menu(self.group, self.pokemon, 'PokeInfo')
         
 class LevelBar(pygame.sprite.Sprite):
     def __init__(self, group, pokemon, x, y):
@@ -474,6 +553,7 @@ class CloseButton(pygame.sprite.Sprite):
         self.image = pygame.Surface((64,64))
         self.rect = self.image.get_rect(topleft = (1206,10))
         self.group = group
+        self.active = True
         
         self.parent = parent
 
@@ -490,6 +570,11 @@ class CloseButton(pygame.sprite.Sprite):
                 elem.kill()
             elif isinstance(elem, LevelBar):
                 elem.kill()
+        if isinstance(self.parent, PokemonIndetifier):
+            for elem in self.group:
+                if hasattr(elem, 'job') and elem.job == 'InvOpt':
+                    elem.active = True
+                    
         self.parent.kill()
         self.kill()
         

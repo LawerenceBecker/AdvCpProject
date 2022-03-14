@@ -37,9 +37,10 @@ class Game:
                             for elem in self.uiSprites:
                                 if elem.rect.collidepoint(pygame.mouse.get_pos()):
                                     if hasattr(elem, 'on_click'):
-                                        elem.on_click()
-                                        self.uiTick = pygame.time.get_ticks()
-                                        break
+                                        if elem.active == True:
+                                            elem.on_click()
+                                            self.uiTick = pygame.time.get_ticks()
+                                            break
                                         
                                         
                                         
