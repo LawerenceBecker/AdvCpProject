@@ -40,7 +40,7 @@ class Player(pygame.sprite.Sprite):
 
         self.pokemonBag = []
         self.bag = {'Medicine': [], 'Pokeballs': []}
-        self.money = 300
+        self.money = 30000000
 
         self.active = True
 
@@ -322,6 +322,7 @@ class InventoryOptions(pygame.sprite.Sprite):
         self.image = pygame.Surface((160, 40))
         self.rect = self.image.get_rect(topleft = (x, y))
         self.player = player
+        self.group = group
 
         self.text = text
 
@@ -344,16 +345,8 @@ class InventoryOptions(pygame.sprite.Sprite):
 
     def on_click(self):
         if self.text == 'Pokemon':
-            for index, pokemon in enumerate(self.player.pokemonBag):
-                print(f'{index+1}. {pokemon.data.nickName}')
-            print(f'{index+2}. End')
-
-            choice = int(input('> '))
+            PokemonIndetifier(self.group, self.player)
             
-            for index, pokemon in enumerate(self.player.pokemonBag):
-                if choice == index+1:
-                    print(f'Health: {pokemon.stats("Health")} / {pokemon.stats("MaxHealth")} \nLevel: {pokemon.data.level} \nCP: {pokemon.stats("CP")} \nEXP: {pokemon.data.exp} / {pokemon.data.expNeeded()[0]}: {pokemon.data.expNeeded()[1]} needed')
-                    return
 
         elif self.text == 'Bag':
             for index, pocket in enumerate(self.player.bag):
@@ -397,3 +390,105 @@ class InventoryOptions(pygame.sprite.Sprite):
                 sys.exit()
             else:
                 return
+
+class PokemonIndetifier(pygame.sprite.Sprite):
+    def __init__(self, group, player):
+        super().__init__(group)
+
+        self.image = pygame.Surface(pygame.display.get_window_size())
+        self.image.fill('light grey')
+        self.rect = self.image.get_rect(topleft = (0,0))
+
+        self.player =player
+
+        self.font = pygame.font.Font("Data/DisposableDroidBB.ttf", 96)
+        self.text_surface = self.font.render('Pokemon', True, (255,255,255))
+        self.image.blit(self.text_surface, [30,10])
+
+        for index, poke in enumerate(self.player.pokemonBag):
+            PokemonOptions(group, self, poke, index)
+
+        CloseButton(group, self)
+
+
+class PokemonOptions(pygame.sprite.Sprite):
+    def __init__(self, group, parent, pokemon, posIndex):
+        super().__init__(group)
+
+        self.image = pygame.Surface((1200,96))
+        self.image.fill('grey')
+        self.rect = self.image.get_rect(topleft= (40, 120+(120*posIndex)))
+        self.posIndex = posIndex
+        self.parent = parent
+
+        self.pokemon = pokemon
+        self.font = pygame.font.Font("Data/DisposableDroidBB.ttf", 64)
+        self.smallFont = pygame.font.Font("Data/DisposableDroidBB.ttf", 48)
+
+        self.pokemonImage = pygame.Surface((64,64))
+        self.pokemonName = self.font.render(self.pokemon.data.nickName, True, (0,0,0))
+        self.pokemonLevel = self.smallFont.render('lv. ' + str(self.pokemon.data.level), True, (0,0,0))
+        self.pokemonCP = self.smallFont.render(('CP '+str(self.pokemon.data.cp)), True, (0,0,0))
+        
+        LevelBar(group, self.pokemon, self.rect.x+132+self.pokemonName.get_width(), self.rect.y+72)
+
+        self.fillPokeData()
+    
+    def fillPokeData(self):
+
+        self.image.blit(self.pokemonImage, [16,16])
+        self.image.blit(self.pokemonName, [104,16])
+        self.image.blit(self.pokemonLevel, [132+self.pokemonName.get_width() ,16])
+        self.image.blit(self.pokemonCP, [1180-self.pokemonCP.get_width() ,24])
+        
+
+    def update(self):
+        if self.rect.collidepoint(pygame.mouse.get_pos()):
+            self.image.fill('dark grey')
+        else:
+            self.image.fill('grey')
+
+        self.fillPokeData()
+
+    def on_click(self):
+        print(f'Health: {self.pokemon.stats("Health")} / {self.pokemon.stats("MaxHealth")} \nLevel: {self.pokemon.data.level} \nCP: {self.pokemon.stats("CP")} \nEXP: {self.pokemon.data.exp} / {self.pokemon.data.expNeeded()[0]}: {self.pokemon.data.expNeeded()[1]} needed')
+        
+class LevelBar(pygame.sprite.Sprite):
+    def __init__(self, group, pokemon, x, y):
+        super().__init__(group)
+
+        self.image = pygame.Surface((96,8))
+        self.rect = self.image.get_rect(topleft = (x,y))
+
+        amount = (pokemon.data.exp - pokemon.data.expNeeded()[2]) / (pokemon.data.expNeeded()[0] - pokemon.data.expNeeded()[2])
+        print((pokemon.data.exp - pokemon.data.expNeeded()[2]) / (pokemon.data.expNeeded()[0] - pokemon.data.expNeeded()[2]))
+        
+        self.fillBar = pygame.Surface((64*amount, 8))
+        self.fillBar.fill('light blue')
+
+        self.image.blit(self.fillBar, [0,0])
+        
+class CloseButton(pygame.sprite.Sprite):
+    def __init__(self,group, parent):
+        super().__init__(group)
+
+        self.image = pygame.Surface((64,64))
+        self.rect = self.image.get_rect(topleft = (1206,10))
+        self.group = group
+        
+        self.parent = parent
+
+    def update(self):
+        if self.rect.collidepoint(pygame.mouse.get_pos()):
+            self.image.fill('dark grey')
+        else:
+            self.image.fill('black')
+            
+    
+    def on_click(self):
+        for elem in self.group:
+            if hasattr(elem, 'parent') and elem.parent == self.parent:
+                elem.kill()
+        self.parent.kill()
+        self.kill()
+        

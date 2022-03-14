@@ -44,7 +44,7 @@ class EntityData():
         self.defenseIV = random.randint(1,16)
 
         self.level = level
-        self.exp = expTotal[level]
+        self.exp = expTotal[level] + 1000
 
         self.pokemonType = pokemon[name]['baseStats']['type']
 
@@ -67,7 +67,7 @@ class EntityData():
         self.cp = self.cpCalc()
 
     def expNeeded(self):
-        return expTotal[self.level+1], expTotal[self.level+1] - self.exp
+        return expTotal[self.level+1], expTotal[self.level+1] - self.exp, expTotal[self.level]
 
     def gainExperience(self, pokemon2, a=1):
         return math.floor((a * expYield[pokemon2.data.name] * pokemon2.data.level) / 7)
