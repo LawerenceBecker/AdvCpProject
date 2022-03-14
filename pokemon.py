@@ -13,6 +13,12 @@ class PygameData(pygame.sprite.Sprite):
         self.data = EntityData(name, level)
         self.positionIndex = 0
 
+        if self.data.pokemonType == 'Fire': self.inventorySprite.fill('red')
+        elif self.data.pokemonType == 'Water': self.inventorySprite.fill('blue')
+        elif self.data.pokemonType == 'Grass': self.inventorySprite.fill('green')
+        elif self.data.pokemonType == 'Normal': self.inventorySprite.fill('white')
+
+    
     def stats(self, whichStat):
         if whichStat == 'Health':
             return self.data.health
@@ -44,7 +50,7 @@ class EntityData():
         self.defenseIV = random.randint(1,16)
 
         self.level = level
-        self.exp = expTotal[level]
+        self.exp = expTotal[level] + random.randint(1, (expTotal[level+1] - expTotal[level]))
 
         self.pokemonType = pokemon[name]['baseStats']['type']
 

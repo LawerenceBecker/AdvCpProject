@@ -425,7 +425,7 @@ class PokemonOptions(pygame.sprite.Sprite):
         self.font = pygame.font.Font("Data/DisposableDroidBB.ttf", 64)
         self.smallFont = pygame.font.Font("Data/DisposableDroidBB.ttf", 48)
 
-        self.pokemonImage = pygame.Surface((64,64))
+        self.pokemonImage = pokemon.inventorySprite
         self.pokemonName = self.font.render(self.pokemon.data.nickName, True, (0,0,0))
         self.pokemonLevel = self.smallFont.render('lv. ' + str(self.pokemon.data.level), True, (0,0,0))
         self.pokemonCP = self.smallFont.render(('CP '+str(self.pokemon.data.cp)), True, (0,0,0))
@@ -487,6 +487,8 @@ class CloseButton(pygame.sprite.Sprite):
     def on_click(self):
         for elem in self.group:
             if hasattr(elem, 'parent') and elem.parent == self.parent:
+                elem.kill()
+            elif isinstance(elem, LevelBar):
                 elem.kill()
         self.parent.kill()
         self.kill()

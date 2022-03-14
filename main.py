@@ -65,8 +65,10 @@ class Game:
         if choice.lower() == 'y':
             self.player.load_char()
         else:
-            self.player.add_pokemon(PygameData('Charmander', 15), 'Test')
-            self.player.add_pokemon(PygameData('Charmander', 5), 'Test2')
+            self.player.add_pokemon(PygameData('Charmander', 5), 'Test')
+            self.player.add_pokemon(PygameData('Bulbasaur', 5), 'Test2')
+            self.player.add_pokemon(PygameData('Squirtle', 5), 'Test3')
+            self.player.add_pokemon(PygameData('Pidgey', 5), 'Test4')
             self.player.add_item(Item('Potion', 'Medicine'), 3)
             self.player.add_item(Item('Poké Ball', 'Pokeballs'), 10)
         
