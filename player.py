@@ -1,5 +1,6 @@
 import pygame
 import pickle
+import sys
 from random import *
 
 from pokemon import PygameData
@@ -202,64 +203,17 @@ class Player(pygame.sprite.Sprite):
         self.direction = pygame.math.Vector2()
 
         if pygame.time.get_ticks() - self.prevTick >= self.moveTimer:
-            if keys[pygame.K_BACKSPACE]:
-                print('\nSaving... \n...')
-                self.save_char()
-                print('Done Saving')
+
+            if keys[pygame.K_TAB]:
                 self.prevTick = pygame.time.get_ticks()
-
-            elif keys[pygame.K_TAB]:
-                while True:
-                    print('\n1. Pokemon \n2. Bag \n3. End')
-                    choice = int(input('> '))
-                    if choice == 3:
+                for elem in self.uiSprites:
+                    if isinstance(elem, InventoryMenu):
+                        elem.kill()
+                        for elem in self.uiSprites:
+                            if isinstance(elem, InventoryOptions):
+                                elem.kill()
                         return
-                    elif choice == 1:
-                        if self.pokemonBag != None:
-                            for index, pokemon in enumerate(self.pokemonBag):
-                                print(f'{index+1}. {pokemon.data.nickName}')
-                            print(f'{index+2}. End')
-
-                            choice = int(input('> '))
-                            
-                            for index, pokemon in enumerate(self.pokemonBag):
-                                if choice == index+1:
-                                    print(f'Health: {pokemon.stats("Health")} / {pokemon.stats("MaxHealth")} \nLevel: {pokemon.data.level} \nCP: {pokemon.stats("CP")} \nEXP: {pokemon.data.exp} / {pokemon.data.expNeeded()[0]}: {pokemon.data.expNeeded()[1]} needed')
-                                    break
-                            
-                            self.prevTick = pygame.time.get_ticks()
-                            return
-                        else:
-                            print('You have no pokemon')
-                    elif choice == 2:
-                        for index, pocket in enumerate(self.bag):
-                            print(f'{index+1}. {pocket}')
-                        print(f'{index+2}. End')
-                        choice = int(input('> '))
-                        
-                        if choice == index+2:
-                            return
-                        for index, pocket in enumerate(self.bag):
-                            if choice == index+1:
-                                des = pocket  
-                        
-                        if len(self.bag[des]) != 0 and des != None:
-                            print(f'\n{des}:')
-                            for index, item in enumerate(self.bag[des]):
-                                print(f'{index+1}. {item[0].name} x{item[1]}')
-                            print(f'{index+2}. End')
-                            
-                            choice = int(input('> '))
-
-                            if choice == index+2:
-                                return
-                            
-                            for index, item in enumerate(self.bag[des]):
-                                if index+1 == choice:
-                                    item[0].find_use(self)
-                                    return
-                        else:
-                            print('You have no items in that pocket')
+                InventoryMenu(self.uiSprites, self)
 
             elif keys[pygame.K_ESCAPE]:
                 print('Reset(Debug)')
@@ -337,3 +291,102 @@ class Player(pygame.sprite.Sprite):
             tempPokeData = PygameData(tempPoke.name, tempPoke.level)
             tempPokeData.data = tempPoke
             self.pokemonBag.append(tempPokeData)
+
+class InventoryMenu(pygame.sprite.Sprite):
+    def __init__(self, group, player):
+        super().__init__(group)
+
+        self.image = pygame.Surface((200, 260))
+        self.image.fill('light grey')
+        self.rect = self.image.get_rect(topleft= (pygame.display.get_surface().get_width()-200,150))
+        self.player = player
+        
+        InventoryOptions(group, 'Pokemon', self.rect.x+20, self.rect.y+20, self.player)
+        InventoryOptions(group, 'Bag', self.rect.x+20, self.rect.y+80, self.player)
+        InventoryOptions(group, 'Save', self.rect.x+20, self.rect.y+140, self.player)
+        InventoryOptions(group, 'End', self.rect.x+20, self.rect.y+200, self.player)
+            
+                        
+
+class InventoryOptions(pygame.sprite.Sprite):
+    def __init__(self, group, text,x, y, player):
+        super().__init__(group)
+
+        self.image = pygame.Surface((160, 40))
+        self.rect = self.image.get_rect(topleft = (x, y))
+        self.player = player
+
+        self.text = text
+
+        self.font = pygame.font.Font("Data/DisposableDroidBB.ttf", 24)
+        self.text_surface = self.font.render(self.text, True, (155,155,155))
+        self.image.blit(self.text_surface, [10,10])
+
+    def update(self):
+
+        if self.rect.collidepoint(pygame.mouse.get_pos()):
+            self.image.fill('grey')
+            color = (255,255,255)
+        else:
+            self.image.fill('black')
+            color = (155,155,155)
+        
+        self.text_surface = self.font.render(self.text, True, color)
+        self.image.blit(self.text_surface, [10,10])
+        
+
+    def on_click(self):
+        if self.text == 'Pokemon':
+            for index, pokemon in enumerate(self.player.pokemonBag):
+                print(f'{index+1}. {pokemon.data.nickName}')
+            print(f'{index+2}. End')
+
+            choice = int(input('> '))
+            
+            for index, pokemon in enumerate(self.player.pokemonBag):
+                if choice == index+1:
+                    print(f'Health: {pokemon.stats("Health")} / {pokemon.stats("MaxHealth")} \nLevel: {pokemon.data.level} \nCP: {pokemon.stats("CP")} \nEXP: {pokemon.data.exp} / {pokemon.data.expNeeded()[0]}: {pokemon.data.expNeeded()[1]} needed')
+                    return
+
+        elif self.text == 'Bag':
+            for index, pocket in enumerate(self.player.bag):
+                print(f'{index+1}. {pocket}')
+            print(f'{index+2}. End')
+            choice = int(input('> '))
+            
+            if choice == index+2:
+                return
+            for index, pocket in enumerate(self.player.bag):
+                if choice == index+1:
+                    des = pocket  
+            
+            if len(self.player.bag[des]) != 0 and des != None:
+                print(f'\n{des}:')
+                for index, item in enumerate(self.player.bag[des]):
+                    print(f'{index+1}. {item[0].name} x{item[1]}')
+                print(f'{index+2}. End')
+                
+                choice = int(input('> '))
+
+                if choice == index+2:
+                    return
+                
+                for index, item in enumerate(self.player.bag[des]):
+                    if index+1 == choice:
+                        item[0].find_use(self)
+                        return
+            else:
+                print('You have no items in that pocket')
+            
+        elif self.text == 'Save':
+            print('\nSaving... \n...')
+            self.player.save_char()
+            print('Done Saving')
+
+        elif self.text == 'End':
+            choice = input('Are you sure?(y/n) \n> ')
+            if choice.lower() == 'y' or choice.lower() == 'yes':
+                pygame.QUIT
+                sys.exit()
+            else:
+                return

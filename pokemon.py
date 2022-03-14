@@ -31,8 +31,8 @@ class PygameData(pygame.sprite.Sprite):
         self.data.health += amount
         if self.data.health >= self.data.maxHealth:
             self.data.health = self.data.maxHealth
-        print(f'You healed {self.data.name} for {amount} points')
-        print(f'{self.data.name}\'s hp: {self.data.health}')
+        print(f'You healed {self.data.nickName} for {amount} points')
+        print(f'{self.data.nickName}\'s HP: {self.data.health} / {self.data.maxHealth}')
 
 class EntityData():
     def __init__(self, name, level):

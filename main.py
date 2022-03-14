@@ -17,6 +17,8 @@ class Game:
         pygame.init()
         self.clock = pygame.time.Clock()
 
+        self.uiTick = pygame.time.get_ticks()
+
         self.sprites = CameraGroup()
         self.uiSprites = pygame.sprite.Group()
         self.objectSprites = pygame.sprite.Group()
@@ -28,6 +30,20 @@ class Game:
 
         while True:
             for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == 1:
+
+                        if pygame.time.get_ticks() - self.uiTick >= 100:
+                            for elem in self.uiSprites:
+                                if elem.rect.collidepoint(pygame.mouse.get_pos()):
+                                    if hasattr(elem, 'on_click'):
+                                        elem.on_click()
+                                        self.uiTick = pygame.time.get_ticks()
+                                        break
+                                        
+                                        
+                                        
+                                        
                 if event.type == pygame.QUIT:
                     pygame.QUIT
                     sys.exit()
