@@ -1,3 +1,12 @@
 {
-  "files": {}
+  "files": {
+    "player.py": [
+      {
+        "id": "750aa9cf-36d7-4ab1-8a12-792315a705e4",
+        "line": 531,
+        "version": 13784,
+        "index": 22675
+      }
+    ]
+  }
 }

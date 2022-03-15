@@ -383,9 +383,6 @@ class Options(pygame.sprite.Sprite):
         
 
     def on_click(self):
-
-        print(self.job)
-
         if self.job == 'InvOpt':
             if self.text == 'Pokemon':
                 for elem in self.group:
@@ -453,6 +450,14 @@ class Options(pygame.sprite.Sprite):
                     elif isinstance(elem, Options) and elem.job == 'InfoOpt': elem.kill()
 
             elif self.text == 'Summary':
+                for elem in self.group:
+                    if hasattr(elem, 'inUse'): 
+                        elem.inUse = False
+                        elem.active = True
+    
+                    elif isinstance(elem, Menu) and elem.job == 'PokeInfo': elem.kill()
+                    elif isinstance(elem, Options) and elem.job == 'InfoOpt': elem.kill()
+
                 print(f'Health: {self.player.stats("Health")} / {self.player.stats("MaxHealth")} \nLevel: {self.player.data.level} \nCP: {self.player.stats("CP")} \nEXP: {self.player.data.exp} / {self.player.data.expNeeded()[0]}: {self.player.data.expNeeded()[1]} needed')
 
 class PokemonIndetifier(pygame.sprite.Sprite):
@@ -527,9 +532,8 @@ class PokemonOptions(pygame.sprite.Sprite):
         self.inUse = True
         for elem in self.group:
             if isinstance(elem, PokemonOptions):
-                self.active = False
-            elif isinstance(elem, Menu) and elem.job == 'PokeInfo':
-                return
+                elem.active = False
+            
         Menu(self.group, self.pokemon, 'PokeInfo')
         
 class LevelBar(pygame.sprite.Sprite):
