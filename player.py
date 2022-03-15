@@ -442,6 +442,9 @@ class Options(pygame.sprite.Sprite):
         elif self.job == 'InfoOpt':
             if self.text == 'Cancel':
                 for elem in self.group:
+                    if hasattr(elem, 'switchie'):
+                        elem.switchie = False
+                for elem in self.group:
                     if hasattr(elem, 'inUse'): 
                         elem.inUse = False
                         elem.active = True
@@ -451,6 +454,9 @@ class Options(pygame.sprite.Sprite):
 
             elif self.text == 'Summary':
                 for elem in self.group:
+                    if hasattr(elem, 'switchie'):
+                        elem.switchie = False
+                for elem in self.group:
                     if hasattr(elem, 'inUse'): 
                         elem.inUse = False
                         elem.active = True
@@ -459,6 +465,17 @@ class Options(pygame.sprite.Sprite):
                     elif isinstance(elem, Options) and elem.job == 'InfoOpt': elem.kill()
 
                 print(f'Health: {self.player.stats("Health")} / {self.player.stats("MaxHealth")} \nLevel: {self.player.data.level} \nCP: {self.player.stats("CP")} \nEXP: {self.player.data.exp} / {self.player.data.expNeeded()[0]}: {self.player.data.expNeeded()[1]} needed')
+
+            elif self.text == 'Swap':
+                for elem in self.group:
+                    if hasattr(elem, 'switchie'):
+                        elem.switchie = False
+                for elem in self.group:
+                    if hasattr(elem, 'inUse') and elem.inUse == True:
+                        elem.switchie = True
+                        elem.inUse = False
+                    if isinstance(elem, PokemonOptions):
+                        elem.active = True
 
 class PokemonIndetifier(pygame.sprite.Sprite):
     def __init__(self, group, player):
@@ -475,13 +492,13 @@ class PokemonIndetifier(pygame.sprite.Sprite):
         self.image.blit(self.text_surface, [30,10])
 
         for index, poke in enumerate(self.player.pokemonBag):
-            PokemonOptions(group, self, poke, index)
+            PokemonOptions(group, self, poke, index, self.player)
 
         CloseButton(group, self)
 
 
 class PokemonOptions(pygame.sprite.Sprite):
-    def __init__(self, group, parent, pokemon, posIndex):
+    def __init__(self, group, parent, pokemon, posIndex, player):
         super().__init__(group)
 
         self.image = pygame.Surface((1200,96))
@@ -492,6 +509,8 @@ class PokemonOptions(pygame.sprite.Sprite):
         self.group = group
         self.inUse = False
         self.active = True
+        self.switchie = False
+        self.player = player
         
         self.pokemon = pokemon
         self.font = pygame.font.Font("Data/DisposableDroidBB.ttf", 64)
@@ -518,8 +537,9 @@ class PokemonOptions(pygame.sprite.Sprite):
         for elem in self.group:
             if hasattr(elem, 'inUse') and elem.inUse == True:
                 return
-                
-        if self.rect.collidepoint(pygame.mouse.get_pos()):
+        if self.switchie == True:
+            self.image.fill('light blue')
+        elif self.rect.collidepoint(pygame.mouse.get_pos()):
             self.image.fill('dark grey')
         elif self.inUse == True:
             self.image.fill('dark grey')
@@ -529,6 +549,34 @@ class PokemonOptions(pygame.sprite.Sprite):
         self.fillPokeData()
 
     def on_click(self): 
+        for elem in self.group:
+            if hasattr(elem, 'switchie'):
+                if elem.switchie == True:
+                    elem1index = elem.posIndex
+                    elem2index = self.posIndex
+
+                    self.player.pokemonBag.pop(elem1index)
+                    self.player.pokemonBag.insert(elem1index, self.pokemon)
+                    
+                    self.player.pokemonBag.pop(elem2index)
+                    self.player.pokemonBag.insert(elem2index, elem.pokemon)
+
+                    elem.switchie = False
+
+                    for elem in self.group:
+                        if isinstance(elem, Menu) and elem.job == 'PokeInfo':
+                            elem.kill()
+                        elif isinstance(elem, Options) and elem.job == 'InfoOpt':
+                            elem.kill()
+                        elif isinstance(elem, PokemonOptions):
+                            elem.kill()
+
+                    optionsParent = self.parent
+                    
+                    for index, poke in enumerate(self.player.pokemonBag):
+                        PokemonOptions(self.group, optionsParent, poke, index, self.player)
+                    
+                    return
         self.inUse = True
         for elem in self.group:
             if isinstance(elem, PokemonOptions):
@@ -574,6 +622,12 @@ class CloseButton(pygame.sprite.Sprite):
                 elem.kill()
             elif isinstance(elem, LevelBar):
                 elem.kill()
+            elif isinstance(elem, Menu) and elem.job == 'PokeInfo':
+                elem.kill()
+            elif isinstance(elem, Options) and elem.job == 'InfoOpt':
+                elem.kill()
+            elif hasattr(elem, 'switchie'):
+                elem.switchie = False
         if isinstance(self.parent, PokemonIndetifier):
             for elem in self.group:
                 if hasattr(elem, 'job') and elem.job == 'InvOpt':
