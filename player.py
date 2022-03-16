@@ -10,10 +10,10 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, groups, x, y, objectSprites):
         super().__init__(groups)
 
-        self.moveUp = pygame.image.load("Character/BoxUp.png").convert_alpha()
-        self.moveDown = pygame.image.load("Character/BoxDown.png").convert_alpha()
-        self.moveLeft = pygame.image.load("Character/BoxLeft.png").convert_alpha()
-        self.moveRight = pygame.image.load("Character/BoxRight.png").convert_alpha()
+        self.moveUp = pygame.image.load("Character/maletraineridleup.png").convert_alpha()
+        self.moveDown = pygame.image.load("Character/maletraineridledown.png").convert_alpha()
+        self.moveLeft = pygame.image.load("Character/maletraineridleleft.png").convert_alpha()
+        self.moveRight = pygame.image.load("Character/maletraineridleright.png").convert_alpha()
 
         self.facing = 'UP'
 
