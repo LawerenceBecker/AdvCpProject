@@ -1,3 +1,5 @@
+## Experience info https://bulbapedia.bulbagarden.net/wiki/Experience
+
 from moveDatabase import moves
 
 cpMult = {
@@ -16,6 +18,32 @@ cpMult = {
     13: 0.48168495,
     14: 0.49985844,
     15: 0.51739395
+}
+
+expYield = {
+    'Charmander': 65,
+    'Bulbasaur': 64,
+    'Squirtle': 64,
+    'Pidgey': 55,
+}
+
+expTotal = {
+    1: 6,
+    2: 21,
+    3: 51,
+    4: 100,
+    5: 172,
+    6: 274,
+    7: 409,
+    8: 583,
+    9: 800,
+    10: 1064,
+    11: 1382,
+    12: 1757,
+    13: 2195,
+    14: 2700,
+    15: 3276,
+    16: 14790
 }
 
 pokemon = {

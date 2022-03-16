@@ -18,7 +18,7 @@ class Item():
         print('Which one would you like to heal')
         while True:
             for index, pokemon in enumerate(player.pokemonBag):
-                print(f'{index+1}. {pokemon.data.name}')
+                print(f'{index+1}. {pokemon.data.nickName}')
             choice = int(input('> '))
             for index, pokemon in enumerate(player.pokemonBag):
                 if index+1 == choice:
