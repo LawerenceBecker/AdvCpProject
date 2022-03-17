@@ -35,6 +35,24 @@ moves = {'Quick': {
               'Power': 5,
               'Cooldown': 500,
               'FillMeter': 5}
+          },
+          'Dragon': {
+            'Dragon Tail': {
+              'Power': 13,
+              'Cooldown': 1100,
+              'FillMeter': 9}
+          },
+          'Psychic': {
+            'Confusion': {
+              'Power': 20,
+              'Cooldown': 1600,
+              'FillMeter': 15}
+          },
+          'Electric': {
+            'Spark': {
+              'Power': 6,
+              'Cooldown': 700,
+              'FillMeter': 9}
           }
 },
          
@@ -60,6 +78,24 @@ moves = {'Quick': {
          'Normal': {
            'Return': {
              'Power': 35,
+             'Bars': 3,
+             'MeterSize': 33}
+         },
+         'Dragon': {
+           'Dragon Claw': {
+             'Power': 50,
+             'Bars': 3,
+             'MeterSize': 33}
+         },
+         'Psychic': {
+           'Psybeam': {
+             'Power': 70,
+             'Bars': 2,
+             'MeterSize': 50}
+         },
+         'Electric': {
+           'Discharge': {
+             'Power': 65,
              'Bars': 3,
              'MeterSize': 33}
          }

@@ -13,10 +13,14 @@ class PygameData(pygame.sprite.Sprite):
         self.data = EntityData(name, level)
         self.positionIndex = 0
 
-        if self.data.pokemonType == 'Fire': self.inventorySprite.fill('red')
-        elif self.data.pokemonType == 'Water': self.inventorySprite.fill('blue')
-        elif self.data.pokemonType == 'Grass': self.inventorySprite.fill('green')
-        elif self.data.pokemonType == 'Normal': self.inventorySprite.fill('white')
+        if self.data.name == 'Simimander': self.inventorySprite = pygame.image.load('Pokemon Sprites/simimander.png').convert_alpha()
+        elif self.data.name == 'Tirninja': self.inventorySprite = pygame.image.load('Pokemon Sprites/tirninja.png').convert_alpha()
+        elif self.data.name == 'Sewbasaur': self.inventorySprite = pygame.image.load('Pokemon Sprites/sewbasaur.png').convert_alpha()
+        elif self.data.name == 'Digvee': self.inventorySprite = pygame.image.load('Pokemon Sprites/digvee.png').convert_alpha()
+        elif self.data.name == 'Drudpa': self.inventorySprite = pygame.image.load('Pokemon Sprites/drudpa.png').convert_alpha()
+        elif self.data.name == 'Kakuita': self.inventorySprite = pygame.image.load('Pokemon Sprites/kakuita.png').convert_alpha()
+        elif self.data.name == 'Manmite': self.inventorySprite = pygame.image.load('Pokemon Sprites/manmite.png').convert_alpha()
+        elif self.data.name == 'Manrupt': self.inventorySprite = pygame.image.load('Pokemon Sprites/manrupt.png').convert_alpha()
 
     
     def stats(self, whichStat):
@@ -58,11 +62,17 @@ class EntityData():
         self.GrassQuick = Move('Grass', 'Quick', 'Vine Whip')
         self.NormalQuick = Move('Normal', 'Quick', 'Tackle')
         self.WaterQuick = Move('Water', 'Quick', 'Water Gun')
+        self.DragonQuick = Move('Dragon', 'Quick', 'Dragon Tail')
+        self.PsychicQuick = Move('Psychic', 'Quick', 'Confusion')
+        self.ElectricQuick = Move('Electric', 'Quick', 'Spark')
 
         self.FireSpecial = Special('Fire', 'Special', 'Fire Punch')
         self.GrassSpecial = Special('Grass', 'Special', 'Solar Beam')
         self.NormalSpecial =  Special('Normal', 'Special', 'Return')
         self.WaterSpecial = Special('Water', 'Special', 'Surf')
+        self.DragonSpecial = Special('Dragon', 'Special', 'Dragon Claw')
+        self.PsychicSpecial = Special('Psychic', 'Special', 'Psybeam')
+        self.ElectricSpecial = Special('Electric', 'Special', 'Discharge')
       
         self.maxHealth = self.statCalc(self.hpIV, 'hp')
         self.health = self.maxHealth

@@ -21,10 +21,14 @@ cpMult = {
 }
 
 expYield = {
-    'Charmander': 65,
-    'Bulbasaur': 64,
-    'Squirtle': 64,
-    'Pidgey': 55,
+    'Simimander': 65,
+    'Sewbasaur': 64,
+    'Tirninja': 64,
+    'Digvee': 92,
+    'Drudpa': 170,
+    'Kakuita': 59,
+    'Manmite': 89,
+    'Manrupt': 175
 }
 
 expTotal = {
@@ -47,7 +51,7 @@ expTotal = {
 }
 
 pokemon = {
-  'Charmander': {
+  'Simimander': { ## based on charmander
     'baseStats': {
         'hp': 236,
         'attack': 116,
@@ -56,7 +60,7 @@ pokemon = {
     }
   },
   
-  'Bulbasaur': {
+  'Sewbasaur': { ## based on bulbasuar
     'baseStats': {
         'hp': 256,
         'attack': 118,
@@ -65,21 +69,66 @@ pokemon = {
     }
   },
   
-  'Squirtle': {
+  'Tirninja': { ## based on Tirtouga
     'baseStats': {
-        'hp': 254,
-        'attack': 94,
-        'defense': 121,
+        'hp': 144,
+        'attack': 134,
+        'defense': 146,
         'type': 'Water'
     }
   },
   
-  'Pidgey': {
+  'Belloraid': { ## based on bellsprout
     'baseStats': {
-        'hp': 240,
-        'attack': 85,
-        'defense': 73,
+        'hp': 137,
+        'attack': 139,
+        'defense': 61,
+        'type': 'Grass'
+    }
+  },
+
+  'Digvee': { ## based on eevee
+    'baseStats': {
+        'hp': 146,
+        'attack': 104,
+        'defense': 114,
         'type': 'Normal'
+    }
+  },
+
+  'Drudpa': { ## based on Druddigon
+    'baseStats': {
+        'hp': 184,
+        'attack': 213,
+        'defense': 170,
+        'type': 'Dragon'
+    }
+  },
+
+  'Kakuita': { ## based on Gothia
+    'baseStats': {
+        'hp': 128,
+        'attack': 98,
+        'defense': 112,
+        'type': 'Psychic'
+    }
+  },
+
+  'Manmite': { ## based on Magnemite
+    'baseStats': {
+        'hp': 93,
+        'attack': 165,
+        'defense': 121,
+        'type': 'Electric'
+    }
+  },
+
+  'Manrupt': { ## based on Camerupt
+    'baseStats': {
+        'hp': 172,
+        'attack': 194,
+        'defense': 136,
+        'type': 'Fire'
     }
   }
 }

@@ -527,7 +527,7 @@ class PokemonOptions(pygame.sprite.Sprite):
     
     def fillPokeData(self):
 
-        self.image.blit(self.pokemonImage, [16,16])
+        self.image.blit(self.pokemonImage, [8,8])
         self.image.blit(self.pokemonName, [104,16])
         self.image.blit(self.pokemonLevel, [132+self.pokemonName.get_width() ,16])
         self.image.blit(self.pokemonCP, [1180-self.pokemonCP.get_width() ,24])
